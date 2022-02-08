@@ -8,7 +8,7 @@ private:
     std::string m_handle_name;
 
 public:
-    ILiftNode(NodeManager* node_manager, std::string handle_name): m_node_manager(node_manager), m_handle_name(handle_name) {};
+    ILiftNode(NodeManager* node_manager, std::string handle_name): Node(node_manager, 10), m_node_manager(node_manager), m_handle_name(handle_name) {};
 
     virtual void initialize() = 0;
 

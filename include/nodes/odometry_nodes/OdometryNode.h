@@ -3,7 +3,6 @@
 #include "nodes/NodeManager.h"
 #include "api.h"
 #include "ros_lib/ros.h"
-#include "nodes/subsystems/drivetrain_nodes/TankDriveNode.h"
 #include "nodes/sensor_nodes/ADIEncoderNode.h"
 #include "nodes/sensor_nodes/InertialSensorNode.h"
 #include "nodes/actuator_nodes/MotorNode.h"

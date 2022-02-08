@@ -4,7 +4,7 @@
 #include "auton/Auton.h"
 #include "util/Timer.h"
 #include "util/Constants.h"
-#include "nodes/subsystems/IRollerIntakeNode.h"
+#include "nodes/IRollerIntakeNode.h"
 
 class RollerIntakeAction : public AutonAction {
 private:

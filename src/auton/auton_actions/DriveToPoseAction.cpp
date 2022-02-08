@@ -10,11 +10,11 @@ DriveToPoseAction::DriveToPoseAction(IDriveNode* drive_node, OdometryNode* odom_
 }
 
 void DriveToPoseAction::ActionInit() {
-    m_pursuit.startPursuit();
+    m_pursuit->startPursuit();
 }
 
 AutonAction::actionStatus DriveToPoseAction::Action() {
-    IPursuit::TargetVelocity target_velocity = m_pursuit.getTargetVelocity(m_odom_node->getCurrentPose());
+    IPursuit::TargetVelocity target_velocity = m_pursuit->getTargetVelocity(m_odom_node->getCurrentPose());
 
     m_drive_node->setDriveVelocity(target_velocity.linear_velocity.x(), target_velocity.linear_velocity.y(), target_velocity.rotational_velocity);
 

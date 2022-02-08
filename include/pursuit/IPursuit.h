@@ -16,7 +16,7 @@ public:
     struct TargetVelocity {
         Vector2d linear_velocity;
         float rotational_velocity;
-        bool end_of_path;
+        bool is_within_end_tolerance;
     };
 
     IPursuit(Timer timer=Timer()): m_timer(timer) {};
@@ -25,5 +25,5 @@ public:
 
     virtual TargetVelocity getTargetVelocity(Pose current_pose) = 0;
 
-    virtual ~HolonomicPathPursuit() {};
+    virtual ~IPursuit() {};
 };

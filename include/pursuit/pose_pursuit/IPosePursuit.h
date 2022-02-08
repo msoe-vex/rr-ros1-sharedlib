@@ -20,5 +20,5 @@ public:
 
     virtual IPursuit::TargetVelocity getTargetVelocity(Pose current_pose) = 0;
 
-    virtual ~HolonomicPathPursuit() {};
+    virtual ~IPosePursuit() {};
 };

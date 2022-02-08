@@ -12,13 +12,13 @@ class FollowPathAction : public AutonAction {
 private:
     IDriveNode* m_drive_node;
     OdometryNode* m_odom_node;
-    IPathPursuit m_pursuit;
+    IPathPursuit* m_pursuit;
     Path m_path;
     bool m_reset_pose;
     Timer m_timer;
 
 public:
-    FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, IPathPursuit pursuit, Path path, bool reset_pose=false);
+    FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, IPathPursuit* pursuit, Path path, bool reset_pose=false);
 
     void ActionInit();
 

@@ -21,5 +21,5 @@ public:
 
     virtual TargetVelocity getTargetVelocity(Pose current_pose) = 0;
 
-    virtual ~HolonomicPathPursuit() {};
+    virtual ~IPathPursuit() {};
 };

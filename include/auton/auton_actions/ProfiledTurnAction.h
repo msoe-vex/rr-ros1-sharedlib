@@ -2,7 +2,7 @@
 
 #include "api.h"
 #include "auton/Auton.h"
-#include "nodes/subsystems/IDriveNode.h"
+#include "nodes/IDriveNode.h"
 #include "nodes/sensor_nodes/InertialSensorNode.h"
 #include "eigen/Eigen/Dense"
 

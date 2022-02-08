@@ -1,7 +1,7 @@
 #pragma once
 
 #include "api.h"
-#include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
+#include "nodes/subsystems/IDriveNode.h"
 #include "math/Pose.h"
 #include "util/Encoders.h"
 #include "util/Timer.h"
