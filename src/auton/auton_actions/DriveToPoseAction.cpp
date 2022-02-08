@@ -1,19 +1,20 @@
 #include "auton/auton_actions/DriveToPoseAction.h"
 
-DriveToPoseAction::DriveToPoseAction(IDriveNode* drive_node, OdometryNode* odom_node, Pose end_pose) :
+DriveToPoseAction::DriveToPoseAction(IDriveNode* drive_node, OdometryNode* odom_node, IPosePurusit pursuit, Pose end_pose) :
         m_drive_node(drive_node),
         m_odom_node(odom_node), 
+        m_pursuit(pursuit),
         m_end_pose(end_pose),
         m_holonomic_pose_pursuit(end_pose) {
 
 }
 
 void DriveToPoseAction::ActionInit() {
-    m_holonomic_pose_pursuit.startPursuit();
+    m_pursuit.startPursuit();
 }
 
 AutonAction::actionStatus DriveToPoseAction::Action() {
-    HolonomicPosePursuit::TargetVelocity target_velocity = m_holonomic_pose_pursuit.getTargetVelocity(m_odom_node->getCurrentPose());
+    IPursuit::TargetVelocity target_velocity = m_pursuit.getTargetVelocity(m_odom_node->getCurrentPose());
 
     m_drive_node->setDriveVelocity(target_velocity.linear_velocity.x(), target_velocity.linear_velocity.y(), target_velocity.rotational_velocity);
 
