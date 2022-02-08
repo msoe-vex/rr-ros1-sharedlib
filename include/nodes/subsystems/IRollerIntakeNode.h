@@ -3,8 +3,12 @@
 #include "nodes/NodeManager.h"
 
 class IRollerIntakeNode : public Node {
+private:
+    NodeManager* m_node_manager;
+    std::string m_handle_name;
+
 public:
-    IRollerIntakeNode(NodeManager* node_manager, std::string handle_name);
+    IRollerIntakeNode(NodeManager* node_manager, std::string handle_name): m_node_manager(node_manager), m_handle_name(handle_name) {};
 
     virtual void initialize() = 0;
 
