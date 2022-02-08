@@ -15,11 +15,6 @@ void TurnToAngleAction::ActionInit() {
 AutonAction::actionStatus TurnToAngleAction::Action() {    
     Eigen::Rotation2Dd current_angle(m_inertial_sensor->getYaw());
 
-    // std::string log_str = "Gyro Angle: " + to_string(current_angle.angle()) + "\nTarget Angle: " + to_string(m_target_angle.angle());
-    // m_tank_drive->m_handle->logwarn(log_str.c_str());
-
-    Logger::logInfo("Gyro Angle: " + to_string(current_angle.angle()) + "\nTarget Angle: " + to_string(m_target_angle.angle()));
-
     double delta_angle = (m_target_angle.inverse() * current_angle).smallestAngle();
 
     double turning_power = delta_angle / M_PI * -1;

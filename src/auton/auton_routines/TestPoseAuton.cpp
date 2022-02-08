@@ -1,7 +1,7 @@
 #include "auton/auton_routines/TestPoseAuton.h"
 
 TestPoseAuton::TestPoseAuton(IDriveNode* drive_node, OdometryNode* odom_node) : 
-        Auton("Test Pose Node"), 
+        Auton("Test Pose Auton"), 
         m_drive_node(drive_node), 
         m_odom_node(odom_node) {
 

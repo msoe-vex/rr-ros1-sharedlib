@@ -1,7 +1,9 @@
 #include "auton/auton_routines/TestTurnAuton.h"
 
 TestTurnAuton::TestTurnAuton(IDriveNode* drive_node, InertialSensorNode* inertial_sensor_node) : 
-        Auton("Test Turn Node"), m_drive_node(drive_node), m_inertial_sensor_node(inertial_sensor_node) {
+        Auton("Test Turn Node"), 
+        m_drive_node(drive_node), 
+        m_inertial_sensor_node(inertial_sensor_node) {
     
 }
 

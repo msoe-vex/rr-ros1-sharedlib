@@ -1,9 +1,9 @@
 #include "auton/auton_actions/FollowPathAction.h"
 
-FollowPathAction::FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, Path path, bool reset_pose) :
+FollowPathAction::FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, IPathPursuit pursuit, Path path, bool reset_pose) :
         m_drive_node(drive_node),
         m_odom_node(odom_node), 
-        m_holonomic_pursuit(path),
+        m_pursuit(pursuit),
         m_path(path),
         m_reset_pose(reset_pose) {
 
@@ -14,11 +14,11 @@ void FollowPathAction::ActionInit() {
         m_odom_node->setCurrentPose(m_path.getPathPoints().at(0).getPose());
     }
 
-    m_holonomic_pursuit.startPursuit();
+    m_pursuit.startPursuit();
 }
 
 AutonAction::actionStatus FollowPathAction::Action() {
-    HolonomicPursuit::TargetVelocity target_velocity = m_holonomic_pursuit.getTargetVelocity(m_odom_node->getCurrentPose());
+    IPursuit::TargetVelocity target_velocity = m_pursuit.getTargetVelocity(m_odom_node->getCurrentPose());
 
     m_drive_node->setDriveVelocity(target_velocity.linear_velocity.x(), target_velocity.linear_velocity.y(), target_velocity.rotational_velocity);
 

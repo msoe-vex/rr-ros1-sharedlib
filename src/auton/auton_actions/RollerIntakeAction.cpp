@@ -1,17 +1,17 @@
-#include "auton/auton_actions/IntakeAction.h"
+#include "auton/auton_actions/RollerIntakeAction.h"
 
-IntakeAction::IntakeAction(IntakeNode* intake_node, int voltage, double time) : 
+RollerIntakeAction::RollerIntakeAction(IRollerIntakeNode* intake_node, int voltage, double time) : 
         m_intake_node(intake_node), 
         m_voltage(voltage), 
         m_time(time) {
     
 }
 
-void IntakeAction::ActionInit() {
+void RollerIntakeAction::ActionInit() {
     m_timer.Start();
 }
 
-AutonAction::actionStatus IntakeAction::Action() {
+AutonAction::actionStatus RollerIntakeAction::Action() {
     if (m_time <= 0) {
         m_intake_node->setIntakeVoltage(m_voltage);
         return END;

@@ -2,14 +2,18 @@
 
 ProfiledTurnAction::ProfiledTurnAction(IDriveNode* drive_node, InertialSensorNode* imu, Eigen::Rotation2Dd angle, double max_velocity, 
         double max_accel) :
-        m_drive_node(drive_node), m_imu(imu), m_angle(angle), 
-        m_max_velocity(max_velocity), m_max_accel(max_accel), m_lastSpeed(0), m_feedForward(3.) {
+        m_drive_node(drive_node), 
+        m_imu(imu), 
+        m_angle(angle), 
+        m_max_velocity(max_velocity), 
+        m_max_accel(max_accel), 
+        m_lastSpeed(0), 
+        m_feedForward(3.) {
 
 }
 
 void ProfiledTurnAction::ActionInit() {
     m_timer.Start();
-    m_drive_node->resetEncoders();
 }
 
 ProfiledTurnAction::actionStatus ProfiledTurnAction::Action() {
