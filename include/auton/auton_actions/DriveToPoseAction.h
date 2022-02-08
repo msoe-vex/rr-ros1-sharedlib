@@ -1,5 +1,6 @@
 #pragma once
 
+#include <math.h>
 #include "api.h"
 #include "auton/Auton.h"
 #include "nodes/subsystems/IDriveNode.h"
@@ -7,8 +8,6 @@
 #include "nodes/sensor_nodes/InertialSensorNode.h"
 #include "pursuit/pose_pursuit/IPosePursuit.h"
 #include "math/Pose.h"
-
-#include <math.h>
 
 class DriveToPoseAction : public AutonAction {
 private:
