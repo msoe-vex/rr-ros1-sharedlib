@@ -18,6 +18,8 @@ public:
 
     virtual void setLiftPosition(int position) = 0;
 
+    virtual int getPosition() = 0;
+
     virtual void teleopPeriodic() {};
 
     virtual void autonPeriodic() {};
