@@ -12,8 +12,8 @@ void MoveLiftToPositionAction::ActionInit() {
 }
 
 AutonAction::actionStatus MoveLiftToPositionAction::Action() {
-    int positionBoundUpper = (m_lift_node->getPosition) + m_tolerance;
-    int positionBoundLower = (m_lift_node->getPosition) - m_tolerance;
+    int positionBoundUpper = (m_lift_node->getPosition()) + m_tolerance;
+    int positionBoundLower = (m_lift_node->getPosition()) - m_tolerance;
     if(positionBoundLower < m_position && m_position < positionBoundUpper) {
         return END;
     }

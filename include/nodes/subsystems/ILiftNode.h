@@ -17,8 +17,8 @@ public:
     virtual void setLiftVelocity(int velocity) = 0;
 
     virtual void setLiftPosition(int position) = 0;
-    
-    virtual void getPosition() = 0;
+
+    virtual int getPosition() = 0;
 
     virtual void teleopPeriodic() {};
 
