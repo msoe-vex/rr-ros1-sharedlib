@@ -27,6 +27,6 @@ AutonAction::actionStatus RollerIntakeAction::Action() {
     }
 }
 
-void IntakeAction::ActionEnd() {
+void RollerIntakeAction::ActionEnd() {
     
 }

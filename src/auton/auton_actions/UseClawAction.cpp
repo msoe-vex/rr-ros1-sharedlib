@@ -19,6 +19,6 @@ AutonAction::actionStatus UseClawAction::Action() {
     return END;
 }
 
-void IntakeAction::ActionEnd() {
+void UseClawAction::ActionEnd() {
     
 }
