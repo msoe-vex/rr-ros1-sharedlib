@@ -1,9 +1,8 @@
 #pragma once
 
 #include <math.h>
-#include "api.h"
-#include "auton/Auton.h"
-#include "nodes/subsystems/IDriveNode.h"
+#include "lib-rr/auton/Auton.h"
+#include "lib-rr/nodes/subsystems/IDriveNode.h"
 
 class DriveStraightAction : public AutonAction {
 private:

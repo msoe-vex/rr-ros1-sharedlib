@@ -1,4 +1,4 @@
-#include "nodes/actuator_nodes/ADIDigitalOutNode.h"
+#include "lib-rr/nodes/actuator_nodes/ADIDigitalOutNode.h"
 
 ADIDigitalOutNode::ADIDigitalOutNode(NodeManager* node_manager, std::string handle_name,
     int port, bool initial_state) : Node(node_manager, 10), 

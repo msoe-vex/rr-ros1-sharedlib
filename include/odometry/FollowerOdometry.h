@@ -1,12 +1,11 @@
 #pragma once
 
-#include "odometry/Odometry.h"
-#include "util/Constants.h"
-#include "util/Logger.h"
-
 #include <math.h>
+#include "lib-rr/odometry/IOdometry.h"
+#include "lib-rr/util/Constants.h"
+#include "lib-rr/util/Logger.h"
 
-class FollowerOdometry : public Odometry {
+class FollowerOdometry : public IOdometry {
 private:
     bool m_previously_positive = true;
 

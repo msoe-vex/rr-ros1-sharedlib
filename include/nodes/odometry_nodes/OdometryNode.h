@@ -1,17 +1,16 @@
 #pragma once
 
-#include "nodes/NodeManager.h"
-#include "api.h"
+#include "lib-rr/nodes/NodeManager.h"
 #include "ros_lib/ros.h"
-#include "nodes/sensor_nodes/ADIEncoderNode.h"
-#include "nodes/sensor_nodes/InertialSensorNode.h"
-#include "nodes/actuator_nodes/MotorNode.h"
-#include "odometry/Odometry.h"
-#include "odometry/FollowerOdometry.h"
-#include "odometry/TankOdometry.h"
-#include "util/Encoders.h"
-#include "eigen/Eigen/Dense"
-#include "util/Logger.h"
+#include "lib-rr/nodes/sensor_nodes/ADIEncoderNode.h"
+#include "lib-rr/nodes/sensor_nodes/InertialSensorNode.h"
+#include "lib-rr/nodes/actuator_nodes/MotorNode.h"
+#include "lib-rr/odometry/IOdometry.h"
+#include "lib-rr/odometry/FollowerOdometry.h"
+#include "lib-rr/odometry/TankOdometry.h"
+#include "lib-rr/util/Encoders.h"
+#include "lib-rr/eigen/Eigen/Dense"
+#include "lib-rr/util/Logger.h"
 
 class OdometryNode : public Node { 
 public:
@@ -49,7 +48,7 @@ private:
     InertialSensorNode* m_inertial_sensor_node;
     Eigen::Rotation2Dd m_current_angle_offset;
 
-    Odometry* m_odom;
+    IOdometry* m_odom;
 
-    Odometry* m_getOdomClass(OdomConfig odom_config);
+    IOdometry* m_getOdomClass(OdomConfig odom_config);
 };

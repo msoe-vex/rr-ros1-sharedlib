@@ -1,4 +1,4 @@
-#include "pursuit/holonomic_pursuit/HolonomicPosePursuit.h"
+#include "lib-rr/pursuit/pose_pursuit/HolonomicPosePursuit.h"
 
 HolonomicPosePursuit::HolonomicPosePursuit(Pose target_pose, Timer timer) : IPosePursuit(target_pose, timer), 
         m_x_pid(0.1, 0., 0., 0.),
@@ -14,10 +14,8 @@ void HolonomicPosePursuit::startPursuit() {
 IPursuit::TargetVelocity HolonomicPosePursuit::getTargetVelocity(Pose current_pose) {
     float current_time = m_timer.Get();
 
-    m_previous_time = m_timer.Get();
-
-    Vector2d linear_error = m_target_pose.position - current_pose.position;
-    float theta_error = m_target_pose.angle.angle() - current_pose.angle.angle();
+    Vector2d linear_error = m_pose.position - current_pose.position;
+    float theta_error = m_pose.angle.angle() - current_pose.angle.angle();
 
     // Determine the feedback of each movement component to get to our new position
     float x_feedback = m_x_pid.calculate(linear_error.x());

@@ -1,12 +1,12 @@
 #pragma once
 
 #include "api.h"
-#include "math/Pose.h"
-#include "math/Math.h"
-#include "util/Encoders.h"
-#include "util/Constants.h"
+#include "lib-rr/math/Pose.h"
+#include "lib-rr/math/Math.h"
+#include "lib-rr/util/Encoders.h"
+#include "lib-rr/util/Constants.h"
 
-class Odometry {
+class IOdometry {
 protected:
     Rotation2Dd m_gyro_initial_angle;
 
@@ -23,7 +23,7 @@ protected:
     Rotation2Dd m_gyro_offset = Rotation2Dd(GYRO_OFFSET);
 
 public:
-    Odometry(EncoderConfig encoder_1_config, EncoderConfig encoder_2_config, Pose current_pose=Pose());
+    IOdometry(EncoderConfig encoder_1_config, EncoderConfig encoder_2_config, Pose current_pose=Pose());
 
     void ResetEncoderTicks(double encoder_1_ticks=0, double encoder_2_ticks=0);
 
@@ -34,5 +34,5 @@ public:
     virtual void Update(double encoder_1_raw_ticks, double encoder_2_raw_ticks, double track_width) {}
     virtual void Update(double encoder_1_raw_ticks, double encoder_2_raw_ticks, Rotation2Dd gyro_angle) = 0;
 
-    ~Odometry();
+    ~IOdometry();
 };

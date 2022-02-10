@@ -1,4 +1,4 @@
-#include "nodes/actuator_nodes/MotorNode.h"
+#include "lib-rr/nodes/actuator_nodes/MotorNode.h"
 
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h

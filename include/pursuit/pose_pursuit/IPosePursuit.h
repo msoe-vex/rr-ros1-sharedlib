@@ -1,16 +1,15 @@
 #pragma once
 
-#include "api.h"
-#include "pursuit/IPursuit.h"
-#include "eigen/Eigen/Dense"
-#include "util/Timer.h"
-#include "math/Pose.h"
-#include "util/Logger.h"
+#include "lib-rr/pursuit/IPursuit.h"
+#include "lib-rr/eigen/Eigen/Dense"
+#include "lib-rr/util/Timer.h"
+#include "lib-rr/math/Pose.h"
+#include "lib-rr/util/Logger.h"
 
 using namespace Eigen;
 
-class IPosePursuit : IPursuit {
-private:
+class IPosePursuit : public IPursuit {
+protected:
     Pose m_pose;
 
 public:

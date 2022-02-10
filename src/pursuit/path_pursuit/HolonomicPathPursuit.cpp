@@ -1,4 +1,4 @@
-#include "pursuit/path_pursuit/HolonomicPathPursuit.h"
+#include "lib-rr/pursuit/path_pursuit/HolonomicPathPursuit.h"
 
 HolonomicPathPursuit::HolonomicPathPursuit(Path path, Timer timer) : IPathPursuit(path, timer),
         m_x_pid(0.03, 0., 0., 0.),
@@ -23,7 +23,7 @@ IPursuit::TargetVelocity HolonomicPathPursuit::getTargetVelocity(Pose current_po
     float theta_feedback = m_theta_pid.calculate(theta_error);
 
     // Return the target velocities, and whether the path is at the end point
-    TargetVelocity target_velocity = {
+    IPursuit::TargetVelocity target_velocity = {
         Vector2d(x_feedback * MAX_VELOCITY, y_feedback * MAX_VELOCITY), 
         theta_feedback * MAX_VELOCITY,
         m_path.isComplete()
