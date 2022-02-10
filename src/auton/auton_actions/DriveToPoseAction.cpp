@@ -1,6 +1,6 @@
-#include "auton/auton_actions/DriveToPoseAction.h"
+#include "DriveToPoseAction.h"
 
-DriveToPoseAction::DriveToPoseAction(IDriveNode* drive_node, OdometryNode* odom_node, IPosePurusit pursuit, Pose end_pose) :
+DriveToPoseAction::DriveToPoseAction(IDriveNode* drive_node, OdometryNode* odom_node, IPosePurusit* pursuit, Pose end_pose) :
         m_drive_node(drive_node),
         m_odom_node(odom_node), 
         m_pursuit(pursuit),
