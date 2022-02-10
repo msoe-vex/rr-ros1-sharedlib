@@ -1,17 +1,16 @@
 #pragma once
 
-#include "api.h"
-#include "pursuit/pose_pursuit/IPosePursuit.h"
-#include "eigen/Eigen/Dense"
-#include "pathing/Path.h"
-#include "util/Timer.h"
-#include "util/PID.h"
-#include "util/Constants.h"
-#include "math/Pose.h"
+#include "lib-rr/pursuit/pose_pursuit/IPosePursuit.h"
+#include "lib-rr/eigen/Eigen/Dense"
+#include "lib-rr/pathing/Path.h"
+#include "lib-rr/util/Timer.h"
+#include "lib-rr/util/PID.h"
+#include "lib-rr/util/Constants.h"
+#include "lib-rr/math/Pose.h"
 
 using namespace Eigen;
 
-class HolonomicPosePursuit : IPosePursuit {
+class HolonomicPosePursuit : public IPosePursuit {
 private:
     PID m_x_pid;
     PID m_y_pid;

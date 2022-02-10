@@ -1,8 +1,8 @@
 #pragma once
 
-#include "odometry/Odometry.h"
+#include "lib-rr/odometry/IOdometry.h"
 
-class TankOdometry : public Odometry {
+class TankOdometry : public IOdometry {
 public:
     TankOdometry(EncoderConfig left_encoder_config, EncoderConfig right_encoder_config, Pose current_pose=Pose());
 

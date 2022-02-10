@@ -1,9 +1,9 @@
 #pragma once
 
-#include "eigen/Eigen/Dense"
-#include "pathing/PathPoint.h"
-#include "math/Pose.h"
 #include <vector>
+#include "lib-rr/eigen/Eigen/Dense"
+#include "lib-rr/pathing/PathPoint.h"
+#include "lib-rr/math/Pose.h"
 
 using namespace std;
 

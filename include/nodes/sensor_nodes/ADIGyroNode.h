@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nodes/NodeManager.h"
+#include "lib-rr/nodes/NodeManager.h"
 #include "api.h"
 #include "ros_lib/ros.h"
 #include "ros_lib/std_msgs/Float32.h"

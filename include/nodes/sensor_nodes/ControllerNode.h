@@ -1,7 +1,7 @@
 #pragma once
 
 #include "api.h"
-#include "nodes/NodeManager.h"
+#include "lib-rr/nodes/NodeManager.h"
 #include "ros_lib/ros.h"
 #include "ros_lib/v5_hal/V5Controller.h"
 #include "ros_lib/std_msgs/String.h"

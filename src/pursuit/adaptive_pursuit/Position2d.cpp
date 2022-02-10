@@ -1,4 +1,4 @@
-#include "pursuit/adaptive_pursuit/Position2d.h"
+#include "lib-rr/pursuit/adaptive_pursuit/Position2d.h"
 
 Position2d::Delta::Delta(double x, double y, double t) {
 	dx = x;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nodes/NodeManager.h"
+#include "lib-rr/nodes/NodeManager.h"
 
 class IConveyorNode : public Node {
 private:

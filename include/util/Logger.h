@@ -9,7 +9,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include "nodes/NodeManager.h"
+#include "lib-rr/nodes/NodeManager.h"
 
 using namespace std;
 

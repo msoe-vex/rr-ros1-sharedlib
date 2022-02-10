@@ -1,17 +1,16 @@
 #pragma once
 
-#include "api.h"
-#include "pursuit/IPursuit.h"
-#include "eigen/Eigen/Dense"
-#include "pathing/Path.h"
-#include "util/Timer.h"
-#include "math/Pose.h"
-#include "util/Logger.h"
+#include "lib-rr/pursuit/IPursuit.h"
+#include "lib-rr/eigen/Eigen/Dense"
+#include "lib-rr/pathing/Path.h"
+#include "lib-rr/util/Timer.h"
+#include "lib-rr/math/Pose.h"
+#include "lib-rr/util/Logger.h"
 
 using namespace Eigen;
 
-class IPathPursuit : IPursuit {
-private:
+class IPathPursuit : public IPursuit {
+protected:
     Path m_path;
 
 public:
@@ -19,7 +18,7 @@ public:
 
     virtual void startPursuit() = 0;
 
-    virtual TargetVelocity getTargetVelocity(Pose current_pose) = 0;
+    virtual IPursuit::TargetVelocity getTargetVelocity(Pose current_pose) = 0;
 
     virtual ~IPathPursuit() {};
 };

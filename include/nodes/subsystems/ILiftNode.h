@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nodes/NodeManager.h"
+#include "lib-rr/nodes/NodeManager.h"
 
 class ILiftNode : public Node {
 private:

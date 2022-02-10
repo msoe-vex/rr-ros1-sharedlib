@@ -1,11 +1,11 @@
 #pragma once
 
-#include "nodes/NodeManager.h"
+#include "lib-rr/nodes/NodeManager.h"
 #include "api.h"
 #include "ros_lib/ros.h"
 #include "ros_lib/v5_hal/RollPitchYaw.h"
-#include "util/Logger.h"
-#include "eigen/Eigen/Dense"
+#include "lib-rr/util/Logger.h"
+#include "lib-rr/eigen/Eigen/Dense"
 
 class InertialSensorNode : public Node {
 public:

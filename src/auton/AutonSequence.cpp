@@ -1,4 +1,4 @@
-#include "auton/AutonSequence.h"
+#include "lib-rr/auton/AutonSequence.h"
 
 AutonSequence::AutonSequence(AutonNode* initialNode) {
     m_auton_sequence = { initialNode, initialNode };

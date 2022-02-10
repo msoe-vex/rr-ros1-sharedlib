@@ -1,18 +1,18 @@
 #pragma once
 
-#include "api.h"
-#include "pursuit/path_pursuit/IPathPursuit.h"
-#include "eigen/Eigen/Dense"
-#include "pathing/Path.h"
-#include "util/Timer.h"
-#include "util/PID.h"
-#include "util/Constants.h"
-#include "math/Pose.h"
-#include "util/Logger.h"
+#include "lib-rr/pursuit/path_pursuit/IPathPursuit.h"
+#include "lib-rr/pursuit/IPursuit.h"
+#include "lib-rr/eigen/Eigen/Dense"
+#include "lib-rr/pathing/Path.h"
+#include "lib-rr/util/Timer.h"
+#include "lib-rr/util/PID.h"
+#include "lib-rr/util/Constants.h"
+#include "lib-rr/math/Pose.h"
+#include "lib-rr/util/Logger.h"
 
 using namespace Eigen;
 
-class HolonomicPathPursuit : IPathPursuit {
+class HolonomicPathPursuit : public IPathPursuit {
 private:
     PID m_x_pid;
     PID m_y_pid;
@@ -23,7 +23,7 @@ public:
 
     virtual void startPursuit();
 
-    virtual TargetVelocity getTargetVelocity(Pose current_pose);
+    virtual IPursuit::TargetVelocity getTargetVelocity(Pose current_pose);
 
     virtual ~HolonomicPathPursuit();
 };

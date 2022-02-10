@@ -1,4 +1,4 @@
-#include "nodes/odometry_nodes/OdometryNode.h"
+#include "lib-rr/nodes/odometry_nodes/OdometryNode.h"
 
 OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name, 
         ADIEncoderNode* odom_encoder_1, ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor_node, 
@@ -16,7 +16,7 @@ OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name,
     m_odom = m_getOdomClass(odom_config);
 }
 
-Odometry* OdometryNode::m_getOdomClass(OdomConfig config) {
+IOdometry* OdometryNode::m_getOdomClass(OdomConfig config) {
     EncoderConfig adi_encoder_config = {0., 360., 2.8};
     EncoderConfig v5_integrated_encoder_config = {0., 900., 4.0625};
 

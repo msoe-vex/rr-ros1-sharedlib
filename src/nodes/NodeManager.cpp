@@ -1,4 +1,4 @@
-#include "nodes/NodeManager.h"
+#include "lib-rr/nodes/NodeManager.h"
 
 NodeManager::NodeManager(uint32_t(*get_milliseconds)(void)) {
     m_get_millis = get_milliseconds;

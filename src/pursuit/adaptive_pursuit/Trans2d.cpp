@@ -1,4 +1,4 @@
-#include "pursuit/adaptive_pursuit/Trans2d.h"
+#include "lib-rr/pursuit/adaptive_pursuit/Trans2d.h"
 
 Trans2d::Trans2d() {
 	m_x = 0;

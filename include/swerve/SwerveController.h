@@ -1,5 +1,7 @@
+#pragma once
+
 #include "SwerveModule.h"
-#include "eigen/Eigen/Dense"
+#include "lib-rr/eigen/Eigen/Dense"
 
 class SwerveController{
     private:

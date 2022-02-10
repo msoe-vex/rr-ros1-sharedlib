@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <initializer_list>
 
-#include "kinematics/IDriveKinematics.h"
-#include "util/Constants.h"
+#include "lib-rr/kinematics/IDriveKinematics.h"
+#include "lib-rr/util/Constants.h"
 
 class HolonomicDriveKinematics : public IDriveKinematics {
 public:

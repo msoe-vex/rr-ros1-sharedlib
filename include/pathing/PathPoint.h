@@ -1,8 +1,7 @@
 #pragma once
 
-#include "eigen/Eigen/Dense"
-#include "math/Pose.h"
-// #include "util/Logger.h"
+#include "lib-rr/eigen/Eigen/Dense"
+#include "lib-rr/math/Pose.h"
 
 class PathPoint {
 public:
@@ -19,6 +18,7 @@ public:
     PathPoint interpolateTo(PathPoint other, float time);
 
     bool equals(PathPoint* that);
+    
 private:
     Pose m_pose;
     float m_time;
