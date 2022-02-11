@@ -3,7 +3,7 @@
 #include "lib-rr/nodes/NodeManager.h"
 
 class IDriveNode : public Node {
-public: 
+public:     
     struct FourMotorDriveEncoderVals {
         int left_front_encoder_val;
         int left_rear_encoder_val;
