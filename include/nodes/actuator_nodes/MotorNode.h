@@ -32,6 +32,8 @@ public:
 
     void initialize();
 
+    pros::Motor* getMotor();
+
     void resetEncoder();
 
     int getPosition();
