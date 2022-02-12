@@ -16,12 +16,7 @@ protected:
 
     void m_updateCurrentPosition(Vector2d robot_velocity, float theta_velocity, float delta_time);
 
-public:
-    struct TwoMotorPercentages {
-        float left_percent;
-        float right_percent;
-    };
-    
+public:    
     struct FourMotorPercentages {
         float left_front_percent;
         float left_rear_percent;
