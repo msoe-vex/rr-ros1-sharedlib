@@ -3,6 +3,7 @@
 #include "lib-rr/nodes/NodeManager.h"
 
 class IClawNode : public Node {
+private:
     NodeManager* m_node_manager;
     std::string m_handle_name;
 
@@ -11,13 +12,11 @@ public:
 
     virtual void initialize() = 0;
 
-    virtual void openClaw() = 0;
+    virtual void useClaw(bool opened) = 0;
 
-    virtual void closeClaw()= 0;
+    virtual void teleopPeriodic() = 0;
 
-    virtual void teleopPeriodic() {};
+    virtual void autonPeriodic() = 0;
 
-    virtual void autonPeriodic() {};
-
-    virtual ~IClawNode();
+    virtual ~IClawNode() {};
 };

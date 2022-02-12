@@ -24,5 +24,5 @@ public:
 
     virtual void autonPeriodic() {};
 
-    virtual ~ILiftNode();
+    virtual ~ILiftNode() {};
 };
