@@ -13,6 +13,15 @@ void TankDriveKinematics::updateForwardKinematics(IDriveNode::FourMotorDriveEnco
 IDriveKinematics::FourMotorPercentages TankDriveKinematics::inverseKinematics(
         float x, float y, float theta, float max) {
     // TODO
+    
+    FourMotorPercentages motor_percentages {
+        0,
+        0,
+        0,
+        0
+    };
+
+    return motor_percentages;
 }
 
 IDriveKinematics::FourMotorPercentages TankDriveKinematics::simpleKinematics(

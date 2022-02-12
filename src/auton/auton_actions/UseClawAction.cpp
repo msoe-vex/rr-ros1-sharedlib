@@ -12,10 +12,10 @@ void UseClawAction::ActionInit() {
 
 AutonAction::actionStatus UseClawAction::Action() {
     if(m_position) {
-        m_claw_node->openClaw();
+        m_claw_node->useClaw(true);
         return END;
     }
-    m_claw_node-> closeClaw();
+    m_claw_node->useClaw(false);
     return END;
 }
 

@@ -20,5 +20,5 @@ public:
 
     virtual void autonPeriodic() {};
 
-    virtual ~IConveyorNode();
+    virtual ~IConveyorNode() {};
 };
