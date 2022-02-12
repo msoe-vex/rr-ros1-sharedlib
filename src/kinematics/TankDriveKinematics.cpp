@@ -15,6 +15,21 @@ IDriveKinematics::FourMotorPercentages TankDriveKinematics::inverseKinematics(
     // TODO
 }
 
+IDriveKinematics::FourMotorPercentages TankDriveKinematics::simpleKinematics(
+        float left_x, float left_y, float right_x, float right_y, float max) {
+    float left = left_y;
+    float right = right_y;
+
+    float max_val = std::max({fabs(left), fabs(right), max});
+
+    FourMotorPercentages motor_percentages {
+        left / max_val,
+        right / max_val
+    };
+
+    return motor_percentages;
+}
+
 TankDriveKinematics::~TankDriveKinematics() {
 
 }

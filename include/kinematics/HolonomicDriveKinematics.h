@@ -24,7 +24,7 @@ public:
      *  
      * @param encoder_vals struct holding encoder values for all motors
      */
-    void updateForwardKinematics(IDriveNode::FourMotorDriveEncoderVals encoder_vals);
+    virtual void updateForwardKinematics(IDriveNode::FourMotorDriveEncoderVals encoder_vals);
 
     /**
      * This function takes in movements of a drivetrain in the x, y, and theta axes.
@@ -36,9 +36,9 @@ public:
      * @param theta float representing the rotational movement of the drivetrain
      * @returns struct containing percentage of the supplied maximum to send to each motor
      */
-    FourMotorPercentages inverseKinematics(float x, float y, float theta, float max);
+    virtual FourMotorPercentages inverseKinematics(float x, float y, float theta, float max);
 
-    FourMotorPercentages simpleKinematics(float left_x, float left_y, float right_x, float right_y, float max);
+    virtual FourMotorPercentages simpleKinematics(float left_x, float left_y, float right_x, float right_y, float max);
 
     ~HolonomicDriveKinematics();
 
