@@ -76,7 +76,7 @@ IDriveKinematics::FourMotorPercentages HolonomicDriveKinematics::inverseKinemati
     return motor_percentages;
 }
 
-IDriveKinematics::FourMotorPercentages HolonomicDriveKinematics::tankKinematics(
+IDriveKinematics::FourMotorPercentages HolonomicDriveKinematics::simpleKinematics(
         float left_x, float left_y, float right_x, float right_y, float max) {
     float front_left = left_x + left_y;
     float back_left = -left_x + left_y;

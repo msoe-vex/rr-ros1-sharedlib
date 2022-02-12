@@ -2,20 +2,17 @@
 
 #include <algorithm>
 #include <initializer_list>
-
 #include "lib-rr/kinematics/IDriveKinematics.h"
 #include "lib-rr/util/Constants.h"
 
-class HolonomicDriveKinematics : public IDriveKinematics {
+class TankDriveKinematics : public IDriveKinematics {
 public:
-    struct HolonomicWheelLocations {
-        Vector2d left_front_location;
-        Vector2d left_rear_location;
-        Vector2d right_front_location;
-        Vector2d right_rear_location;
+    struct TankWheelLocations {
+        Vector2d left_location;
+        Vector2d right_location;
     };
 
-    HolonomicDriveKinematics(EncoderConfig encoder_config, HolonomicWheelLocations wheel_locations, 
+    TankDriveKinematics(EncoderConfig encoder_config, TankWheelLocations wheel_locations, 
         Pose current_pose=Pose());
 
     /**
@@ -40,14 +37,12 @@ public:
 
     virtual FourMotorPercentages simpleKinematics(float left_x, float left_y, float right_x, float right_y, float max);
 
-    ~HolonomicDriveKinematics();
+    ~TankDriveKinematics();
 
 private:
-    float m_left_front_previous_dist;
-    float m_left_rear_previous_dist;
-    float m_right_front_previous_dist;
-    float m_right_rear_previous_dist;
+    float m_left_previous_dist;
+    float m_right_previous_dist;
 
-    HolonomicWheelLocations m_wheel_locations;
+    TankWheelLocations m_wheel_locations;
 
 };

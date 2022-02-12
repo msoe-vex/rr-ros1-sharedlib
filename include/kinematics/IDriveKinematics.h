@@ -16,7 +16,7 @@ protected:
 
     void m_updateCurrentPosition(Vector2d robot_velocity, float theta_velocity, float delta_time);
 
-public:
+public:    
     struct FourMotorPercentages {
         float left_front_percent;
         float left_rear_percent;
@@ -60,6 +60,8 @@ public:
      * @returns struct containing percentage of the supplied maximum to send to each motor
      */
     virtual FourMotorPercentages inverseKinematics(float x, float y, float theta, float max) = 0;
+
+    virtual FourMotorPercentages simpleKinematics(float left_x, float left_y, float right_x, float right_y, float max) = 0;
 
     ~IDriveKinematics();
 };
