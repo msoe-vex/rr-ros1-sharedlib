@@ -48,6 +48,10 @@ void MotorNode::initialize() {
     Node::m_handle->subscribe(*m_move_motor_voltage_sub);
 }
 
+pros::Motor* MotorNode::getMotor() {
+    return &m_motor;
+}
+
 void MotorNode::resetEncoder() {
     m_motor.tare_position();
 }
