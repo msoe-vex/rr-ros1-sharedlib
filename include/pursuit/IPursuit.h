@@ -18,11 +18,17 @@ public:
         bool is_within_end_tolerance;
     };
 
+    struct goalPoint {
+
+    };
+
     IPursuit(Timer timer=Timer()): m_timer(timer) {};
 
     virtual void startPursuit() = 0;
 
     virtual TargetVelocity getTargetVelocity(Pose current_pose) = 0;
+
+    virtual goalPoint getGoalPoint() = 0;
 
     virtual ~IPursuit() {};
 };
