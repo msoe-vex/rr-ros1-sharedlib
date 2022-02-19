@@ -12,10 +12,11 @@ void TankDriveKinematics::updateForwardKinematics(IDriveNode::FourMotorDriveEnco
 
 IDriveKinematics::FourMotorPercentages TankDriveKinematics::inverseKinematics(
         float x, float y, float theta, float max) {
-    float left = x-theta;
-    float right = x+theta;
+    // TODO: x-(lw)/2 from https://acme-robotics.gitbook.io/road-runner/tour/kinematics
+    float left = x - theta;
+    float right = x + theta;
 
-    float max_val = std::max(fabs(left), fabs(right), max});
+    float max_val = std::max({fabs(left), fabs(right), max});
 
     FourMotorPercentages motor_percentages {
         left / max_val,

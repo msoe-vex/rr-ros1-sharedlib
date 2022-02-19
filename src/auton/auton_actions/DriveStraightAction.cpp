@@ -3,7 +3,7 @@
 DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, double distance, double max_velocity, 
         double max_accel) :
         m_drive_node(drive_node), 
-        m_distance(distance), 
+        m_distance(distance), // in inches
         m_max_velocity(max_velocity), 
         m_max_accel(max_accel), 
         m_lastSpeed(0), 
