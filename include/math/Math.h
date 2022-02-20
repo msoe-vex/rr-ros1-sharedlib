@@ -47,3 +47,19 @@ inline double clamp(double value, double minimum, double maximum) {
         return value;
     }
 }
+
+//might have to remove the pose functionality from this and make it straight up values or maybe a vector
+inline double pt_to_pt(float pt1x, float pt1y, float pt2x, Pose pt2y) {
+    float distance;
+    distance = sqrt(pow((pt1x-pt2x), 2) + pow((pt1y-pt2y), 2));
+    return distance;
+}
+
+inline int sgn(float number) {
+    if (number >= 0) {
+        return 1;
+    }
+    else {
+        return -1;
+    }
+}

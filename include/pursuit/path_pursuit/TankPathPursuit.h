@@ -14,20 +14,20 @@ using namespace Eigen;
 
 class TankPathPursuit : public IPathPursuit {
 private:
-    PID m_x_pid;
-    PID m_y_pid;
-    PID m_theta_pid;
+    int m_lFoundIndex;
+    float m_lookAheadDist;
+    float m_currentHeading;
+    bool m_intersectFound;
 
 public:
     TankPursuit(Path path, Timer timer=Timer());
 
     virtual void startPursuit();
 
-    virtual IPursuit::goalPoint getGoalPoint(Path path, Pose current_pose);
+    //once I understand vector2d that might be what I want to return
+    //virtual vector<float> getGoalPoint(PathPoint Pt1, PathPoint Pt2, Pose current_pose);
 
-    virtual IPursuit::TargetVelocity getTargetVelocity(Pose current_pose);
-
-    virtual getTurnVelocity();
+    virtual float getTurnVelocity(Path path, Pose current_pose);
 
     virtual ~HolonomicPathPursuit();
 };
