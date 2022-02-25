@@ -1,9 +1,12 @@
 #include "lib-rr/pursuit/path_pursuit/TankPathPursuit.h"
+//might be include errors with how this is structured right now
+#include"math.h"
 #include<cmath>
 //constructor
 TankPathPursuit::TankPathPursuit(Path path, Timer timer) : IPathPursuit(path, timer),
-{
-        m_lFoundIndex = 0;
+{       
+        //whats the best way to use and update this in my getTurnVelocity method?
+        m_lastFoundIndex = 0;
         //This value should be in inches
         m_lookAheadDist = 0.7;
         //this value should be in radians
@@ -21,6 +24,7 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
     //this shuld grab the current x and y position from the pose struct passed into the function
     float currentX = current_pose.position().x();
     float currentY = current_pose.position().y();
+    vector<float> currentPt(currentX, currentY);
 
     //Extracting the Poses of the path points before and after the current position?
     Pose Pt1Pose = Pt1.getPose();
@@ -36,7 +40,7 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
     //this is all very jank, need to fix it if the idea works
     //this for loop is wrong, needs to run from StartingIndex to the length of PathPoints, 
     //I think erasing the earliest element in PathPoints when needed should if it
-    for(int i = 0 ; PathPoints.size()) {
+    for(int i = m_lastFoundIndex; PathPoints.size(); i++) {
         //getting offset values for line-circle algortithm
         float x1 = (PathPoints[i].getPose().x()) - currentX;
         float y1 = (PathPoints[i].getPose().y()) - currentY;
@@ -51,10 +55,10 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
 
         //check how c++ does comparision operators
         if (discriminant >= 0) {
-            //how to call functions from the math file? Also once I know how to do that i can clean this code up
+            //I don't think the math header is being included properly, cant see definitions for math functions
             //they use np.sqrt instead of a basic sqrt, ask about that
-            float sol_x1 = (D* dy + sgn(dy) * dx * sqrt(discriminant))/ pow(dr, 2);
-            float sol_x2 = (D* dy - sgn(dy) * dx * sqrt(discriminant))/ pow(dr, 2);
+            float sol_x1 = (D* dy + math::sgn(dy) * dx * sqrt(discriminant))/ pow(dr, 2);
+            float sol_x2 = (D* dy - math::sgn(dy) * dx * sqrt(discriminant))/ pow(dr, 2);
             float sol_y1 = (-D* dx + fabs(dy) * dx * sqrt(discriminant))/ pow(dr, 2);
             float sol_y2 = (-D* dx - fabs(dy) * dx * sqrt(discriminant))/ pow(dr, 2);
 
@@ -76,23 +80,34 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
             if (((minX <= sol1[0] <= maxX) && (minY <= sol1[1] <= maxY))) || (((minX <= sol2[0] <= maxX) && (minY <= sol2[1] <= maxY))){
                 //intersectFound should be scoped right?
                 intersectFound = true;
+                vector<float> nextPt(PathPoints[i+1].getPose().x(), PathPoints[i+1].getPose().x());
 
                 if ((minX <= sol_pt1[0] <= maxX) and (minY <= sol_pt1[1] <= maxY)) and ((minX <= sol_pt2[0] <= maxX) and (minY <= sol_pt2[1] <= maxY)){
                     //need to get this function working first
-                    if(pt_to_pt_distance(sol_pt1, path[i+1]) < pt_to_pt_distance(sol_pt2, path[i+1])) {
+                    //I think path is a python copy paste relic
+                    if(math::pt_to_pt_distance(sol_pt1, nextPt) < math::pt_to_pt_distance(sol_pt2, nextPt)) {
                         goalPt = sol1;
                     } else {
                         goalPt = sol2;
-                    }
-
-                }  else {
+                        }
+                    }  
+                else {
                     if(minX <= sol1[0] <= maxX) and (minY <= sol1[1] <= maxY){
                         goalPt = sol1;
                     }else {
                         goalPt = sol2;
+                        }  
                     }
-                    
-                }   
+                if (math::pt_to_pt(goalPt, nextPt) < math::pt_to_pt(currentPt, nextPt)){
+                    m_lastFoundIndex = i;
+                    break;
+                }  else {
+                    m_lastFoundIndex = i+1;
+                } 
+            }
+            else {
+                intersectFound = false;
+                //update the goalPt to the pathpoint position of the last found index
             }
 
         }

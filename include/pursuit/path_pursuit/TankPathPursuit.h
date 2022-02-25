@@ -14,7 +14,7 @@ using namespace Eigen;
 
 class TankPathPursuit : public IPathPursuit {
 private:
-    int m_lFoundIndex;
+    int m_lastFoundIndex;
     float m_lookAheadDist;
     float m_currentHeading;
     bool m_intersectFound;

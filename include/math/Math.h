@@ -48,10 +48,21 @@ inline double clamp(double value, double minimum, double maximum) {
     }
 }
 
-//might have to remove the pose functionality from this and make it straight up values or maybe a vector
-inline double pt_to_pt(float pt1x, float pt1y, float pt2x, Pose pt2y) {
+inline float pt_to_pt(float pt1x, float pt1y, float pt2x, float pt2y) {
     float distance;
     distance = sqrt(pow((pt1x-pt2x), 2) + pow((pt1y-pt2y), 2));
+    return distance;
+}
+
+//i should probably keep as vector2d data strucutres to avoid this mess
+inline float pt_to_pt(vector<float> pt1, vector<float> pt2) {
+    float distance;
+    distance = sqrt(pow((pt1[0]-pt2[0]), 2) + pow((pt1[1]-pt2[1]), 2));
+    return distance;
+}
+
+inline float pose_to_pose(Pose pose1, Pose pose2){
+    float distance = sqrt(pow((pose1.position.x() - pose2.position.x()), 2) + pow((pose1.position.y() - pose2.position.y()), 2));
     return distance;
 }
 
