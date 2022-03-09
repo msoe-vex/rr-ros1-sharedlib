@@ -9,6 +9,7 @@
 #include "lib-rr/util/Constants.h"
 #include "lib-rr/math/Pose.h"
 #include "lib-rr/util/Logger.h"
+#include<cmath>
 
 using namespace Eigen;
 
