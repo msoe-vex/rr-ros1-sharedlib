@@ -25,9 +25,6 @@ public:
 
     virtual void startPursuit();
 
-    //once I understand vector2d that might be what I want to return
-    //virtual vector<float> getGoalPoint(PathPoint Pt1, PathPoint Pt2, Pose current_pose);
-
     virtual float getTurnVelocity(Path path, Pose current_pose);
 
     virtual ~HolonomicPathPursuit();

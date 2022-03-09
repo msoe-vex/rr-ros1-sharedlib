@@ -11,7 +11,6 @@ TankPathPursuit::TankPathPursuit(Path path, Timer timer) : IPathPursuit(path, ti
         //this value should be in radians
         //probably want to get this from a gryoscope later
     m_currentHeading = 0.;
-    m_intersectFound = false;
 }
 
 //initialzation of timer instance
@@ -21,10 +20,9 @@ void TankPathPursuit::startPursuit() {
 
 float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
     Vector2d currentPt = current_pose.position(); //grabs the Vector2d of the current pose passed in
-
-    bool intersectFound = false; //used for log later
     
     vector<PathPoint> PathPoints = path.getPathPoints();
+    intersectFound = false;
     Vector2d goalPt;
 
     //searches for intersections using the point before and after the robots current position, i and i +1
@@ -40,6 +38,7 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
         float discriminant = pow(m_lookAheadDist, 2.) * pow(dr, 2.) - pow(D, 2.);
 
         //triggered if at least one solution exists, line is tangent or intersecting
+        //no else for this statement, runs through without defining goalPt, thats a potential issue
         if (discriminant >= 0) {
             //they use np.sqrt instead of a basic sqrt, ask about that
             float sol_x1 = (D* dy + math::sgn(dy) * dx * sqrt(discriminant))/ pow(dr, 2);
@@ -58,7 +57,7 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
 
             //this is triggered if one or both solutions are in range
             if (((minX <= sol1.x() <= maxX) && (minY <= sol1.y() <= maxY))) || (((minX <= sol2.x() <= maxX) && (minY <= sol2.y() <= maxY))){
-                m_intersectFound = true;
+                intersectFound = true;
 
                 //triggered if both solutions are in range and chooses which is a better choice
                 if ((minX <= sol1.x() <= maxX) and (minY <= sol1.y() <= maxY)) && ((minX <= sol2.x() <= maxX) and (minY <= sol2.y() <= maxY)){
@@ -77,7 +76,7 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
                         }  
                     }
                 //triggers if the goalPt is closer the next pt than the current position is
-                //this is where i see an issue popping up, this is the only way to break from the loop so itll brick our brain
+                //this is where i see an issue popping up, this is the only way to break from the for loop so well have to run through the entire vector if this doesnt trigger
                 //current_pose wont update in the for loop so thats a big issue, i think
                 if (math::pt_to_pt(goalPt, pt2) < math::pt_to_pt(currentPt, pt2)){
                     m_lastFoundIndex = i;
@@ -90,7 +89,6 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
                 intersectFound = false;
                 goalPt = PathPoints[m_lastFoundIndex].getPose().position();
             }
-
         }
     }
 
