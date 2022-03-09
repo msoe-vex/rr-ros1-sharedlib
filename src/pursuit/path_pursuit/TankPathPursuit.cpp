@@ -18,6 +18,7 @@ void TankPathPursuit::startPursuit() {
     m_timer.Start();
 }
 
+//this seems to return a percentage
 float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
     Vector2d currentPt = current_pose.position(); //grabs the Vector2d of the current pose passed in
     
@@ -38,6 +39,7 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
         float discriminant = pow(m_lookAheadDist, 2.) * pow(dr, 2.) - pow(D, 2.);
 
         //triggered if at least one solution exists, line is tangent or intersecting
+        //BIG ISSUE
         //no else for this statement, runs through without defining goalPt, thats a potential issue
         if (discriminant >= 0) {
             //they use np.sqrt instead of a basic sqrt, ask about that
@@ -91,7 +93,29 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
             }
         }
     }
+    float Kp = 1.2;
 
+    float absTargetAngle = atan2(goalPt.y() - current.y(), goalPt.x() - current.x());
+    if (absTargetAngle < 0) {
+        absTargetAngle += 360; //make this syntax is right
+    }
+
+    float turnError = absTargetAngle - currentHeading;
+    if (turnError > 0 || turnError < -180) {
+        turnError = -1 * math::sgn(turnError) * (360 - abs(turnError));
+    }
+
+    float turnVel = Kp * turnError;
+
+    if (fabs(turnVel) > 100) {
+        if (turnVel > 0) {
+            turnVel = 100;
+        }else {
+            turnVel = -100;
+        }
+    }
+
+    return turnVel;
 }
 
 float TankPathPursuit::getTurnVelocity(vector<float> goalPoint){
