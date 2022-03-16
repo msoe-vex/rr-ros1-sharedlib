@@ -26,6 +26,16 @@ void InertialSensorNode::m_handleSensorMsg(const v5_hal::RollPitchYaw& msg) {
     m_yaw = current_angle.inverse() * m_gyro_offset_angle;
 }
 
+Eigen::Rotation2Dd InertialSensorNode::m_getV5Roll() {
+    Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_roll());
+    return current_angle;
+}
+
+Eigen::Rotation2Dd InertialSensorNode::m_getV5Pitch() {
+    Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_pitch());
+    return current_angle;
+}
+
 Eigen::Rotation2Dd InertialSensorNode::m_getV5Yaw() {
     Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_yaw() * -(M_PI/180));
     return current_angle * m_gyro_offset_angle;
@@ -55,6 +65,8 @@ bool InertialSensorNode::isAtAngle(Eigen::Rotation2Dd angle) {
 void InertialSensorNode::reset() {
     m_inertial_sensor->reset();
     pros::delay(5000);
+    m_roll = m_getV5Roll();
+    m_pitch = m_getV5Pitch();
     m_yaw = m_getV5Yaw();
 }
 
@@ -63,6 +75,8 @@ void InertialSensorNode::teleopPeriodic() {
         case V5:
             if (!(m_inertial_sensor->is_calibrating())) {
                 // Convert sensor input to radians, and reverse orientation 
+                m_roll = m_getV5Roll();
+                m_pitch = m_getV5Pitch();
                 m_yaw = m_getV5Yaw();
             }
     }
@@ -73,6 +87,8 @@ void InertialSensorNode::autonPeriodic() {
         case V5:
             if (!m_inertial_sensor->is_calibrating()) {
                 // Convert sensor input to radians, and reverse orientation 
+                m_roll = m_getV5Roll();
+                m_pitch = m_getV5Pitch();
                 m_yaw = m_getV5Yaw();
             }
     }

@@ -21,6 +21,10 @@ public:
     
     void initialize();
     
+    Eigen::Rotation2Dd getRoll();
+
+    Eigen::Rotation2Dd getPitch();
+
     Eigen::Rotation2Dd getYaw();
 
     bool isAtAngle(Eigen::Rotation2Dd angle);
@@ -39,6 +43,8 @@ private:
     std::string m_sub_inertial_sensor_name;
     double turning_threshold = 0.1;
     SensorConfig m_config;
+    Eigen::Rotation2Dd m_roll;
+    Eigen::Rotation2Dd m_pitch;
     Eigen::Rotation2Dd m_yaw;
     Eigen::Rotation2Dd m_gyro_offset_angle; 
 
@@ -46,5 +52,9 @@ private:
 
     void m_handleSensorMsg(const v5_hal::RollPitchYaw& msg);
 
+    Eigen::Rotation2Dd m_getV5Roll();
+
+    Eigen::Rotation2Dd m_getV5Pitch();
+    
     Eigen::Rotation2Dd m_getV5Yaw();
 };
