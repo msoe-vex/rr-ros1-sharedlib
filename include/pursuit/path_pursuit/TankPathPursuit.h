@@ -19,6 +19,7 @@ private:
     float m_lookAheadDist;
     float m_currentHeading;
     bool m_intersectFound;
+    float m_pi = atan(1)*4;
 
 public:
     TankPursuit(Path path, Timer timer=Timer());

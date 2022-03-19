@@ -40,7 +40,7 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
 
         //triggered if at least one solution exists, line is tangent or intersecting
         //BIG ISSUE
-        //no else for this statement, runs through without defining goalPt, thats a potential issue
+        //no else for this statement, runs through without defining goalPt, thats an issue
         if (discriminant >= 0) {
             //they use np.sqrt instead of a basic sqrt, ask about that
             float sol_x1 = (D* dy + math::sgn(dy) * dx * sqrt(discriminant))/ pow(dr, 2);
@@ -101,9 +101,13 @@ float TankPathPursuit::getTurnVelocity(Path path, Pose current_pose) {
     }
 
     float turnError = absTargetAngle - currentHeading;
+
     if (turnError > 0 || turnError < -180) {
         turnError = -1 * math::sgn(turnError) * (360 - abs(turnError));
     }
+
+    float turnErrorRad = acos((goalPt.dot(currentPt))/((goalPt.norm())*(currentPt.norm())); //might work as an alternative to above code???
+    float turnError = turnErrorRad *(180/m_pi);//how to best get pi in here???
 
     float turnVel = Kp * turnError;
 
