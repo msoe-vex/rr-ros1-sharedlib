@@ -27,14 +27,14 @@ void InertialSensorNode::m_handleSensorMsg(const v5_hal::RollPitchYaw& msg) {
 }
 
 Eigen::Rotation2Dd InertialSensorNode::m_getV5Roll() {
-    Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_roll());
+    Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_roll() * -(M_PI/180));
     return current_angle;
 }
 
 Eigen::Rotation2Dd InertialSensorNode::m_getV5Pitch() {
-    Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_pitch());
+    Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_pitch() * -(M_PI/180));
     return current_angle;
-}
+} 
 
 Eigen::Rotation2Dd InertialSensorNode::m_getV5Yaw() {
     Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_yaw() * -(M_PI/180));
@@ -56,6 +56,14 @@ void InertialSensorNode::initialize() {
 
 Eigen::Rotation2Dd InertialSensorNode::getYaw() {
     return m_yaw;
+}
+
+Eigen::Rotation2Dd InertialSensorNode::getRoll() {
+    return m_roll;
+}
+
+Eigen::Rotation2Dd InertialSensorNode::getPitch() {
+    return m_pitch;
 }
 
 bool InertialSensorNode::isAtAngle(Eigen::Rotation2Dd angle) {
