@@ -11,6 +11,7 @@
 #include "lib-rr/util/Encoders.h"
 #include "lib-rr/eigen/Eigen/Dense"
 #include "lib-rr/util/Logger.h"
+#include "lib-rr/util/Timer.h"
 
 class OdometryNode : public Node { 
 public:
@@ -49,6 +50,10 @@ private:
     Eigen::Rotation2Dd m_current_angle_offset;
 
     IOdometry* m_odom;
+
+    Timer m_timer;
+    double lastTime = 0.;
+    double delayTime = 0.25;
 
     IOdometry* m_getOdomClass(OdomConfig odom_config);
 };

@@ -17,7 +17,7 @@ OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name,
 }
 
 IOdometry* OdometryNode::m_getOdomClass(OdomConfig config) {
-    EncoderConfig adi_encoder_config = {0., 360., 2.8};
+    EncoderConfig adi_encoder_config = {0., 2400., 1.975};
     EncoderConfig v5_integrated_encoder_config = {0., 900., 4.0625};
 
     switch (config) {
@@ -35,6 +35,8 @@ void OdometryNode::initialize() {
     // Calibrate the gyro, and reset the orientation with the correct gyro angle
     m_inertial_sensor_node->reset();
 	setCurrentPose(Pose(Vector2d(0, 0), m_inertial_sensor_node->getYaw()));
+
+    m_timer.Start();
 }
 
 void OdometryNode::setCurrentPose(Pose pose) {
@@ -47,6 +49,11 @@ Pose OdometryNode::getCurrentPose() {
 
 void OdometryNode::teleopPeriodic() {
     m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), m_inertial_sensor_node->getYaw());
+    
+    // if (m_timer.Get() - lastTime > delayTime) {
+    //     std::cout << "X Pos: " << m_odom->GetPose().position.x() << " | Y Pos: " << m_odom->GetPose().position.y() << " | Angle: " << m_odom->GetPose().angle.angle() << std::endl;
+    //     lastTime = m_timer.Get();
+    // }
 }
 
 void OdometryNode::autonPeriodic() {
