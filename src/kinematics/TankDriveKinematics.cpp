@@ -7,14 +7,13 @@ TankDriveKinematics::TankDriveKinematics(EncoderConfig encoder_config, TankWheel
 }
 
 void TankDriveKinematics::updateForwardKinematics(IDriveNode::FourMotorDriveEncoderVals encoder_vals) {
-    // TODO
+    // TODO same math from TankPathPursuit
 }
 
 IDriveKinematics::FourMotorPercentages TankDriveKinematics::inverseKinematics(
         float x, float y, float theta, float max) {
-    // TODO: x-(lw)/2 from https://acme-robotics.gitbook.io/road-runner/tour/kinematics
-    float left = x - theta;
-    float right = x + theta;
+    float left = y - theta;
+    float right = y + theta;
 
     float max_val = std::max({fabs(left), fabs(right), max});
 

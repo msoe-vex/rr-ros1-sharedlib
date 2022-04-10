@@ -13,6 +13,7 @@ void TestPathAuton::AddNodes() {
     Pose start_pose = path.getPathPoints().at(0).getPose();
     HolonomicPathPursuit* pursuit = new HolonomicPathPursuit(path); 
     
+    
     m_odom_node->setCurrentPose(start_pose);
 
     m_path_node = new AutonNode(20, new FollowPathAction(m_drive_node, m_odom_node, pursuit, path, true));
