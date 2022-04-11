@@ -18,18 +18,23 @@ void FollowPathAction::ActionInit() {
 }
 
 AutonAction::actionStatus FollowPathAction::Action() {
+    Pose currentPose = m_odom_node->getCurrentPose();
 
-    IPursuit::TargetVelocity target_velocity = m_pursuit->getTargetVelocity(m_odom_node->getCurrentPose());
+    IPursuit::TargetVelocity target_velocity = m_pursuit->getTargetVelocity(currentPose);
 
-    m_drive_node->setDriveVelocity(target_velocity.linear_velocity.x(), target_velocity.linear_velocity.y(), target_velocity.rotational_velocity);
+    std::cout << "X: " << currentPose.position.x() << " | Y: " << currentPose.position.y() << " | Angle: " << currentPose.angle.angle() << std::endl;
 
-    if (m_timer.Get() == 0 && target_velocity.is_within_end_tolerance) {
-        m_timer.Start();
-    } else if (m_timer.Get() > 0 && !target_velocity.is_within_end_tolerance) {
-        m_timer.Reset();
-    } else if (m_timer.Get() > 0.5) {
-        return END;
-    }
+    std::cout << "T_X: " << target_velocity.linear_velocity.x() << " | T_Y" << target_velocity.linear_velocity.y() << " | T_Angle: " << target_velocity.rotational_velocity << std::endl;
+
+    // m_drive_node->setDriveVelocity(target_velocity.linear_velocity.x(), target_velocity.linear_velocity.y(), target_velocity.rotational_velocity);
+
+    // if (m_timer.Get() == 0 && target_velocity.is_within_end_tolerance) {
+    //     m_timer.Start();
+    // } else if (m_timer.Get() > 0 && !target_velocity.is_within_end_tolerance) {
+    //     m_timer.Reset();
+    // } else if (m_timer.Get() > 0.5) {
+    //     return END;
+    // }
 
     return CONTINUE;
 }
