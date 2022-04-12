@@ -13,14 +13,13 @@ void TankPathPursuit::startPursuit() {
 IPursuit::TargetVelocity TankPathPursuit::getTargetVelocity(Pose current_pose) {
     Pose next_pose = m_path.update(m_timer.Get());
 
-    // Create a vector between the current pose and the target pose
-    Vector2d linear_error = (current_pose.angle.inverse() * Rotation2Dd(M_PI_2)) * (next_pose.position - current_pose.position);
+    // Create a vector representing the movement required by the robot, in the robot coordinate frame
+    Vector2d robot_error = next_pose.position - current_pose.position;
 
-    // Create a unit vector with the robot's current heading
-    Vector2d unit_vector(1, 0);
+    //std::cout << "Current: (" << current_pose.position.x() << "," << current_pose.position.y() << ") | Next: (" << next_pose.position.x() << "," << next_pose.position.y() << ")" << std::endl;
 
     // Determine the angle between the positive x-axis and the angle to the new point from the robot's position
-    Eigen::Rotation2Dd next_pose_angle = Eigen::Rotation2Dd(atan2(linear_error(1), linear_error(0)));
+    Eigen::Rotation2Dd next_pose_angle = Eigen::Rotation2Dd(atan2(robot_error(1), robot_error(0)));
 
     //std::cout << "C_X: " << current_pose.position.x() << " | C_Y: " << current_pose.position.y() << " | C_A: " << current_pose.angle.angle() << std::endl;
     //std::cout << "H_A: " << current_pose.angle.angle() << std::endl;
@@ -31,6 +30,7 @@ IPursuit::TargetVelocity TankPathPursuit::getTargetVelocity(Pose current_pose) {
     // Theta error is positive when the next pose angle is larger than the robot angle
     // Positive when we want to turn left
     float theta_error = (next_pose_angle * current_pose.angle.inverse()).smallestAngle();
+    //std::cout << "Current: " << current_pose.angle.angle() << " | Next: " << next_pose_angle.angle() <<  " | Theta: " << theta_error << std::endl;
 
     // Create feedback to give the motors - this is v from the guide below
     float motor_feedback = 0;
@@ -41,13 +41,13 @@ IPursuit::TargetVelocity TankPathPursuit::getTargetVelocity(Pose current_pose) {
     // Special case if we are travelling on a straight line
     if (theta_error == 0) {
         std::cout << "Straight Line" << std::endl;
-        motor_feedback = m_linear_pid.calculate(linear_error.norm());
+        motor_feedback = m_linear_pid.calculate(robot_error.norm());
     } else {
         // Based on this guide:
         // https://acme-robotics.gitbook.io/road-runner/tour/kinematics
 
         // Figure out the radius of the curvature
-        float curve_radius = (linear_error.norm() / 2) / sin(abs(theta_error));
+        float curve_radius = (robot_error.norm() / 2) / sin(abs(theta_error));
 
         // Determine the circumference of the circle
         float circumference = M_PI * 2 * curve_radius;
@@ -64,7 +64,7 @@ IPursuit::TargetVelocity TankPathPursuit::getTargetVelocity(Pose current_pose) {
         int direction = theta_error / abs(theta_error);
 
         // Determine the angle offset for our motor speeds
-        offset = direction * min(motor_feedback * (DRIVE_TRACK_WIDTH / (2 * curve_radius)) * 0.005, 1.0);
+        offset = direction * min(motor_feedback * (DRIVE_TRACK_WIDTH / (2 * curve_radius)) * 0.04, 1.0);
 
         //std::cout << "T: " << theta_error << " | CR: " << curve_radius << " | CIR: " << circumference << " | AL: " << arc_length_to_point << " | MF:" << motor_feedback << " | OFF: " << offset << std::endl;
     }
