@@ -2,7 +2,8 @@
 
 TankPathPursuit::TankPathPursuit(Path path, Timer timer) : IPathPursuit(path, timer),
         m_linear_pid(0.03, 0., 0., 0.),
-        m_curve_pid(0.03, 0, 0, 0) {
+        m_curve_pid(0.027, 0, 0, 0),
+        m_curve_turning_pid(0.27, 0, 0, 0) {
     
 }
 
@@ -64,8 +65,8 @@ IPursuit::TargetVelocity TankPathPursuit::getTargetVelocity(Pose current_pose) {
         int direction = theta_error / abs(theta_error);
 
         // Determine the angle offset for our motor speeds
-        offset = direction * min(motor_feedback * (DRIVE_TRACK_WIDTH / (2 * curve_radius)) * 0.04, 1.0);
-
+        //offset = direction * min(pow(motor_feedback * (DRIVE_TRACK_WIDTH / (2 * curve_radius)) * 0.00001, 0.1), 1.0);
+        offset = m_curve_turning_pid.calculate(theta_error);
         //std::cout << "T: " << theta_error << " | CR: " << curve_radius << " | CIR: " << circumference << " | AL: " << arc_length_to_point << " | MF:" << motor_feedback << " | OFF: " << offset << std::endl;
     }
 

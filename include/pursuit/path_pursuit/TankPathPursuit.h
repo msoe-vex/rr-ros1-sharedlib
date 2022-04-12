@@ -17,6 +17,7 @@ class TankPathPursuit : public IPathPursuit {
 private:
     PID m_linear_pid;
     PID m_curve_pid;
+    PID m_curve_turning_pid;
 
 public:
     TankPathPursuit(Path path, Timer timer=Timer());
