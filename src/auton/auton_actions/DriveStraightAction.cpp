@@ -40,7 +40,6 @@ AutonAction::actionStatus DriveStraightAction::Action() {
 
     m_lastSpeed = speed;
     m_lastTime = m_timer.Get();
-
     if (remainingDistance < 0.5) {
         return END;
     } else {
