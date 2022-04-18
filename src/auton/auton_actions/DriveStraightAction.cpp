@@ -4,6 +4,7 @@ DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, OdometryNode* o
         double max_accel) :
         m_drive_node(drive_node), 
         m_odometry_node(odometry_node),
+        m_theta_error_PID(0.75, 0, 0),
         m_distance(distance), // in inches
         m_max_velocity(max_velocity), 
         m_max_accel(max_accel), 
@@ -15,7 +16,7 @@ DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, OdometryNode* o
 void DriveStraightAction::ActionInit() {
     m_timer.Start();
     m_drive_node->resetEncoders();
-    m_starting_pose = m_odometry_node->getCurrentPose(); //used to keep track of the starting x coordinate
+    m_starting_pose = m_odometry_node->getCurrentPose(); //used to keep track of the starting angle
 }
 
 AutonAction::actionStatus DriveStraightAction::Action() {
@@ -23,11 +24,9 @@ AutonAction::actionStatus DriveStraightAction::Action() {
 
     //getting the error in the x direction
     m_current_pose = m_odometry_node->getCurrentPose(); //used to keep track of the current x position
-    double x_error = (m_current_pose.position.x() - m_starting_pose.position.x());
+    double theta_error = (m_current_pose.angle * m_starting_pose.angle.inverse()).smallestAngle();
     //calculating the offset in motor velocity due to the x error
-    double k = 0.002; //proportional constant for calculating offset
-    double offset = k*x_error*m_max_velocity; //offset to be added and subtacted to the left and right sides velocity
-    std::cout << "current calculated offset: " << offset << std::endl;
+    std::cout << "current calculated theta error: " << theta_error << std::endl;
 
     double speed = m_max_velocity;
 
@@ -49,11 +48,14 @@ AutonAction::actionStatus DriveStraightAction::Action() {
 
     speed = max(speed, m_feedForward);
 
+    //calculating motor offset
+    double offset = m_theta_error_PID.calculate(theta_error) * speed;
+
     m_lastSpeed = speed;
     //calculating left and right speeds
-    double leftSpeed = speed - offset;
+    double leftSpeed = speed + offset;
     std::cout << "leftSpeed: " << leftSpeed << std::endl;
-    double rightSpeed = speed + offset;
+    double rightSpeed = speed - offset;
     std::cout << "rightSpeed: " << rightSpeed << std::endl;
     m_lastTime = m_timer.Get();
     if (remainingDistance < 0.5) {
