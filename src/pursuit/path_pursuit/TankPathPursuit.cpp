@@ -19,8 +19,10 @@ IPursuit::TargetVelocity TankPathPursuit::getTargetVelocity(Pose current_pose) {
 
     //std::cout << "Current: (" << current_pose.position.x() << "," << current_pose.position.y() << ") | Next: (" << next_pose.position.x() << "," << next_pose.position.y() << ")" << std::endl;
 
+    std::cout << "Current: " << current_pose.angle.angle() << ") | Next: (" << next_pose.angle.angle() << ")" << std::endl;
+
     // Determine the angle between the positive x-axis and the angle to the new point from the robot's position
-    Eigen::Rotation2Dd next_pose_angle = Eigen::Rotation2Dd(atan2(robot_error(1), robot_error(0)));
+    Eigen::Rotation2Dd path_angle = Eigen::Rotation2Dd(atan2(robot_error(1), robot_error(0)));
 
     //std::cout << "C_X: " << current_pose.position.x() << " | C_Y: " << current_pose.position.y() << " | C_A: " << current_pose.angle.angle() << std::endl;
     //std::cout << "H_A: " << current_pose.angle.angle() << std::endl;
@@ -30,8 +32,12 @@ IPursuit::TargetVelocity TankPathPursuit::getTargetVelocity(Pose current_pose) {
     // https://www.cuemath.com/geometry/angle-between-vectors/
     // Theta error is positive when the next pose angle is larger than the robot angle
     // Positive when we want to turn left
-    float theta_error = (next_pose_angle * current_pose.angle.inverse()).smallestAngle();
+    float theta_error = (next_pose.angle * current_pose.angle.inverse()).smallestAngle();
     //std::cout << "Current: " << current_pose.angle.angle() << " | Next: " << next_pose_angle.angle() <<  " | Theta: " << theta_error << std::endl;
+
+    // Check if we should be moving in reverse; this happens when the difference between the path angle and the pose
+    // angle is greater than 90 degrees (likely around 180 degrees)
+    int reverse_path = abs((next_pose.angle * path_angle.inverse()).smallestAngle()) > M_PI_2 ? -1 : 1;
 
     // Create feedback to give the motors - this is v from the guide below
     float motor_feedback = 0;
@@ -76,7 +82,7 @@ IPursuit::TargetVelocity TankPathPursuit::getTargetVelocity(Pose current_pose) {
 
     // Return the target velocities, and whether the path is at the end point
     IPursuit::TargetVelocity target_velocity = {
-        Vector2d(0, motor_feedback * MAX_VELOCITY), 
+        Vector2d(0, motor_feedback * MAX_VELOCITY * reverse_path), 
         offset * MAX_VELOCITY,
         m_path.isComplete()
     };
