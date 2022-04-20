@@ -4,7 +4,7 @@ DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, OdometryNode* o
         double max_accel) :
         m_drive_node(drive_node), 
         m_odometry_node(odometry_node),
-        m_theta_error_PID(0.75, 0, 0),
+        m_theta_error_PID(5, 0, 0),
         m_distance(distance), // in inches
         m_max_velocity(max_velocity), 
         m_max_accel(max_accel), 
@@ -26,7 +26,7 @@ AutonAction::actionStatus DriveStraightAction::Action() {
     m_current_pose = m_odometry_node->getCurrentPose(); //used to keep track of the current x position
     double theta_error = (m_current_pose.angle * m_starting_pose.angle.inverse()).smallestAngle();
     //calculating the offset in motor velocity due to the x error
-    std::cout << "current calculated theta error: " << theta_error << std::endl;
+    // std::cout << "current calculated theta error: " << theta_error << std::endl;
 
     double speed = m_max_velocity;
 
@@ -55,6 +55,7 @@ AutonAction::actionStatus DriveStraightAction::Action() {
     //calculating left and right speeds
     double leftSpeed = speed + offset;
     std::cout << "leftSpeed: " << leftSpeed << std::endl;
+    std::cout << "offset: " << offset << std::endl;
     double rightSpeed = speed - offset;
     std::cout << "rightSpeed: " << rightSpeed << std::endl;
     m_lastTime = m_timer.Get();
@@ -62,10 +63,13 @@ AutonAction::actionStatus DriveStraightAction::Action() {
         return END;
     } else {
         if (m_distance > 0) {
-            m_drive_node->setRightVelocity(rightSpeed);
+            // std::cout << "speed: " << speed << std::endl;
+            // m_drive_node->setDriveVelocity(speed, offset);
             m_drive_node->setLeftVelocity(leftSpeed);
+            m_drive_node->setRightVelocity(rightSpeed);
         } else {
-            m_drive_node->setDriveVelocity(-speed, 0);
+            m_drive_node->setLeftVelocity(-leftSpeed);
+            m_drive_node->setRightVelocity(-rightSpeed);
         }
         
         return CONTINUE;
