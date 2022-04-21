@@ -1,7 +1,6 @@
 #include "lib-rr/auton/auton_actions/DriveStraightAction.h"
 
-DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, OdometryNode* odometry_node, double distance, double max_velocity, 
-        double max_accel) :
+DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, OdometryNode* odometry_node, double distance, double max_velocity, double max_accel) :
         m_drive_node(drive_node), 
         m_odometry_node(odometry_node),
         m_theta_error_PID(0.35, 0, 0),
@@ -38,7 +37,7 @@ AutonAction::actionStatus DriveStraightAction::Action() {
     }
 
     // Subtract the found offset of 3 inches to shorten the path
-    double remainingDistance = max(fabs(m_distance) - fabs(((m_drive_node->getIntegratedEncoderVals().left_front_encoder_val / 900.0) * (M_PI * 3.25))) - 3, 0.);
+    double remainingDistance = max(fabs(m_distance) - fabs(((m_drive_node->getIntegratedEncoderVals().left_front_encoder_val / 900.0) * (5./3.) * (M_PI * 3.25))), 0.);
     std::cout << "Encoder Value: " << m_drive_node->getIntegratedEncoderVals().left_front_encoder_val << std::endl;
     //std::cout << "Current Angle: " << m_current_pose.angle.angle() << " Starting Angle: " << m_starting_pose.angle.angle() <<  " Remaining Dist: " << remainingDistance <<std::endl;
 
