@@ -65,11 +65,9 @@ AutonAction::actionStatus DriveStraightAction::Action() {
         if (m_distance > 0) {
             // std::cout << "speed: " << speed << std::endl;
             // m_drive_node->setDriveVelocity(speed, offset);
-            m_drive_node->setLeftVelocity(leftSpeed);
-            m_drive_node->setRightVelocity(rightSpeed);
+            m_drive_node->setDriveVelocity(speed, offset);
         } else {
-            m_drive_node->setLeftVelocity(-leftSpeed);
-            m_drive_node->setRightVelocity(-rightSpeed);
+            m_drive_node->setDriveVelocity(-speed, offset);
         }
         
         return CONTINUE;
