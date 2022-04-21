@@ -1,6 +1,6 @@
-#include "lib-rr/auton/auton_routines/TestPathAuton.h"
+#include "lib-rr/auton/auton_routines/TestTankPathAuton.h"
 
-TestPathAuton::TestPathAuton(IDriveNode* drive_node, OdometryNode* odom_node) : 
+TestTankPathAuton::TestTankPathAuton(IDriveNode* drive_node, OdometryNode* odom_node) : 
         Auton("Test Path Node"), 
         m_drive_node(drive_node), 
         m_odom_node(odom_node),
@@ -8,13 +8,9 @@ TestPathAuton::TestPathAuton(IDriveNode* drive_node, OdometryNode* odom_node) :
 
 }
 
-void TestPathAuton::AddNodes() {
+void TestTankPathAuton::AddNodes() {
     Path path = m_path_manager->GetPath("TestPath");
-    Pose start_pose = path.getPathPoints().at(0).getPose();
-    HolonomicPathPursuit* pursuit = new HolonomicPathPursuit(path); 
-    
-    
-    m_odom_node->setCurrentPose(start_pose);
+    TankPathPursuit* pursuit = new TankPathPursuit(path); 
 
     m_path_node = new AutonNode(20, new FollowPathAction(m_drive_node, m_odom_node, pursuit, path, true));
 

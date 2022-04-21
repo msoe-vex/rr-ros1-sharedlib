@@ -18,9 +18,9 @@ Pose Path::update(float time) {
         return m_last_point.getPose();
     } else {
         // Remove any points that have been passed
-        for (auto it = m_pathPoints.begin(); it != m_pathPoints.end(); it++) {
+        for (auto it = m_pathPoints.begin(); it != --m_pathPoints.end() && it != m_pathPoints.end(); it++) {
             if(time > (it + 1)->getTime()) { // Point has been passed
-                m_pathPoints.erase(it);
+               m_pathPoints.erase(it);
             } else { // Point not yet reached 
                 break;
             }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 #include "lib-rr/eigen/Eigen/Dense"
 #include "lib-rr/pathing/PathPoint.h"
 #include "lib-rr/math/Pose.h"

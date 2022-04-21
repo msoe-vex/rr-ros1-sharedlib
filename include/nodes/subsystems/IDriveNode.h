@@ -19,13 +19,13 @@ public:
 
     virtual FourMotorDriveEncoderVals getIntegratedEncoderVals() = 0;
 
-    virtual void setDriveVoltage(int x_voltage, int theta_voltage) = 0;
+    virtual void setDriveVoltage(int y_voltage, int theta_voltage) = 0;
 
-    virtual void setDriveVoltage(int x_voltage, int y_voltage, int theta_voltage) {};
+    virtual void setDriveVoltage(int x_voltage, int y_voltage, int theta_voltage) = 0;
 
-    virtual void setDriveVelocity(float x_velocity, float theta_velocity) = 0;
+    virtual void setDriveVelocity(float y_velocity, float theta_velocity) = 0;
 
-    virtual void setDriveVelocity(float x_velocity, float y_velocity, float theta_velocity) {};
+    virtual void setDriveVelocity(float x_velocity, float y_velocity, float theta_velocity) = 0;
 
     virtual void teleopPeriodic() {};
 
