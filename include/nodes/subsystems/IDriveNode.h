@@ -27,14 +27,6 @@ public:
 
     virtual void setDriveVelocity(float x_velocity, float y_velocity, float theta_velocity) = 0;
 
-    virtual void setRightVoltage(float voltage) {};
-
-    virtual void setLeftVoltage(float voltage) {};
-
-    virtual void setRightVelocity(float velocity) {};
-
-    virtual void setLeftVelocity(float velocity) {};
-
     virtual void teleopPeriodic() {};
 
     virtual void autonPeriodic() {};
