@@ -38,7 +38,7 @@ AutonAction::actionStatus DriveStraightAction::Action() {
 
     // Subtract the found offset of 3 inches to shorten the path
     double remainingDistance = max(fabs(m_distance) - fabs(((m_drive_node->getIntegratedEncoderVals().left_front_encoder_val / 900.0) * (5./3.) * (M_PI * 3.25))), 0.);
-    std::cout << "Encoder Value: " << m_drive_node->getIntegratedEncoderVals().left_front_encoder_val << std::endl;
+    //std::cout << "Encoder Value: " << m_drive_node->getIntegratedEncoderVals().left_front_encoder_val << std::endl;
     //std::cout << "Current Angle: " << m_current_pose.angle.angle() << " Starting Angle: " << m_starting_pose.angle.angle() <<  " Remaining Dist: " << remainingDistance <<std::endl;
 
 
