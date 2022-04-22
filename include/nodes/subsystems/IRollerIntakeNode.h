@@ -14,7 +14,7 @@ public:
 
     virtual void setIntakeVoltage(int voltage) = 0;
 
-    virtual void setIntakeVelocity(int velocity) = 0;
+    virtual void setIntakeVelocity(float velocity) = 0;
 
     virtual void openIntakes(int open) {};
 

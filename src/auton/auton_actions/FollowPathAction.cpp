@@ -30,7 +30,7 @@ AutonAction::actionStatus FollowPathAction::Action() {
         m_timer.Start();
     } else if (m_timer.Get() > 0 && !target_velocity.is_within_end_tolerance) {
         m_timer.Reset();
-    } else if (m_timer.Get() > 1.) {
+    } else if (m_timer.Get() > 0.3) {
         return END;
     }
 

@@ -50,6 +50,14 @@ Pose OdometryNode::getCurrentPose() {
 void OdometryNode::teleopPeriodic() {
     m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), m_inertial_sensor_node->getYaw());
     
+    Pose currentPose = m_odom->GetPose();
+    float x = currentPose.position.x();
+    float y = currentPose.position.y();
+    float angle = currentPose.angle.angle();
+
+    pros::lcd::print(0, "Position: (%.2f, %.2f)\n", x, y);
+    pros::lcd::print(1, "Angle: %.2f", angle);
+
     // if (m_timer.Get() - lastTime > delayTime) {
     //     std::cout << "X Pos: " << m_odom->GetPose().position.x() << " | Y Pos: " << m_odom->GetPose().position.y() << " | Angle: " << m_odom->GetPose().angle.angle() << std::endl;
     //     lastTime = m_timer.Get();
@@ -58,6 +66,14 @@ void OdometryNode::teleopPeriodic() {
 
 void OdometryNode::autonPeriodic() {
     m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), m_inertial_sensor_node->getYaw());
+
+    Pose currentPose = m_odom->GetPose();
+    float x = currentPose.position.x();
+    float y = currentPose.position.y();
+    float angle = currentPose.angle.angle();
+    
+    pros::lcd::print(0, "Position: (%.2f, %.2f)\n", x, y);
+    pros::lcd::print(1, "Angle: %.2f", angle);
 }
 
 OdometryNode::~OdometryNode() {

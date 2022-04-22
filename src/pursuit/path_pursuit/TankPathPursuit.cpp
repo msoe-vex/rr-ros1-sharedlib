@@ -19,7 +19,7 @@ IPursuit::TargetVelocity TankPathPursuit::getTargetVelocity(Pose current_pose) {
 
     //std::cout << "Current: (" << current_pose.position.x() << "," << current_pose.position.y() << ") | Next: (" << next_pose.position.x() << "," << next_pose.position.y() << ")" << std::endl;
 
-    std::cout << "Current: " << current_pose.angle.angle() << ") | Next: (" << next_pose.angle.angle() << ")" << std::endl;
+    //std::cout << "Current: " << current_pose.angle.angle() << ") | Next: (" << next_pose.angle.angle() << ")" << std::endl;
 
     // Determine the angle between the positive x-axis and the angle to the new point from the robot's position
     Eigen::Rotation2Dd path_angle = Eigen::Rotation2Dd(atan2(robot_error(1), robot_error(0)));
