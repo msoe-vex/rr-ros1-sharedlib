@@ -1,6 +1,6 @@
 #include "lib-rr/odometry/IOdometry.h"
 
-IOdometry::IOdometry(EncoderConfig encoder_1_config, EncoderConfig encoder_2_config, Pose current_pose): 
+IOdometry::IOdometry(EncoderConfig encoder_1_config, EncoderConfig encoder_2_config, EncoderLocations locations, Pose current_pose): 
         m_encoder_1_ticks_to_dist((encoder_1_config.wheel_diameter * PI) / 
             encoder_1_config.ticks_per_wheel_revolution),
         m_encoder_2_ticks_to_dist((encoder_2_config.wheel_diameter * PI) / 

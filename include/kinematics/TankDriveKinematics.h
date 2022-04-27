@@ -44,5 +44,4 @@ private:
     float m_right_previous_dist;
 
     TankWheelLocations m_wheel_locations;
-
 };

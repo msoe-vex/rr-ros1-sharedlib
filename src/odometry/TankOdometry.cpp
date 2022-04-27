@@ -1,7 +1,7 @@
 #include "lib-rr/odometry/TankOdometry.h"
 
-TankOdometry::TankOdometry(EncoderConfig leftEncoderConfig, EncoderConfig rightEncoderConfig, 
-    Pose currentPose): IOdometry(leftEncoderConfig, rightEncoderConfig, currentPose) {
+TankOdometry::TankOdometry(EncoderConfig leftEncoderConfig, EncoderConfig rightEncoderConfig, EncoderLocations locations,
+    Pose currentPose): IOdometry(leftEncoderConfig, rightEncoderConfig, locations, currentPose), m_locations(locations) {
 
 }
 

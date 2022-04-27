@@ -1,7 +1,7 @@
 #include "lib-rr/odometry/FollowerOdometry.h"
 
-FollowerOdometry::FollowerOdometry(EncoderConfig xEncoderConfig, EncoderConfig yEncoderConfig, 
-    Pose currentPose): IOdometry(xEncoderConfig, yEncoderConfig, currentPose) {
+FollowerOdometry::FollowerOdometry(EncoderConfig xEncoderConfig, EncoderConfig yEncoderConfig, EncoderLocations locations,
+    Pose currentPose): IOdometry(xEncoderConfig, yEncoderConfig, locations, currentPose), m_locations(locations) {
 
 }
 
@@ -20,9 +20,6 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     double x_encoder_dist = x_encoder_raw_ticks * IOdometry::m_encoder_1_ticks_to_dist;
     double y_encoder_dist = y_encoder_raw_ticks * IOdometry::m_encoder_2_ticks_to_dist;
 
-    Vector2d x_encoder_location(ODOM_PERPENDICULAR_X, ODOM_PERPENDICULAR_Y);
-    Vector2d y_encoder_location(ODOM_PARALLEL_X, ODOM_PARALLEL_Y);
-
     // Reset the current position of the robot
     if (m_pose_reset) {
         IOdometry::m_last_encoder_1_dist = x_encoder_dist;
@@ -38,13 +35,13 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
         * IOdometry::m_gyro_offset * IOdometry::m_robot_pose.angle.inverse(); // Find change in angle
 
     // Determine the arc length of the turn from the center of each encoder
-    double x_arc_length = x_encoder_location.norm() * angle_delta.smallestAngle();
-    double y_arc_length = y_encoder_location.norm() * angle_delta.smallestAngle();
+    double x_arc_length = m_locations.x_encoder_location.norm() * angle_delta.smallestAngle();
+    double y_arc_length = m_locations.y_encoder_location.norm() * angle_delta.smallestAngle();
 
     // Determine the tangential component of each encoder relative to the circle of rotation
     // TODO update to a vector projection
-    double x_position_coef = fabs(sin(atan2(x_encoder_location.y(), x_encoder_location.x())));
-    double y_position_coef = fabs(cos(atan2(y_encoder_location.y(), y_encoder_location.x())));
+    double x_position_coef = fabs(sin(atan2(m_locations.x_encoder_location.y(), m_locations.x_encoder_location.x())));
+    double y_position_coef = fabs(cos(atan2(m_locations.y_encoder_location.y(), m_locations.y_encoder_location.x())));
 
     // Translate to encoder value
     double x_encoder_turning_component = x_arc_length * x_position_coef;

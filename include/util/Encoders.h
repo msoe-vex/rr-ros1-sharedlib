@@ -9,5 +9,5 @@
 struct EncoderConfig {
     double initial_ticks;
     double ticks_per_wheel_revolution;
-    double wheel_diameter; 
+    double wheel_diameter;
 };

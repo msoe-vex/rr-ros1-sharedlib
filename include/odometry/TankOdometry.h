@@ -3,8 +3,11 @@
 #include "lib-rr/odometry/IOdometry.h"
 
 class TankOdometry : public IOdometry {
+private:
+    EncoderLocations m_locations;
+    
 public:
-    TankOdometry(EncoderConfig left_encoder_config, EncoderConfig right_encoder_config, Pose current_pose=Pose());
+    TankOdometry(EncoderConfig left_encoder_config, EncoderConfig right_encoder_config, EncoderLocations locations, Pose current_pose=Pose());
 
     void Update(double left_encoder_raw_ticks, double right_encoder_raw_ticks, double track_width);
 

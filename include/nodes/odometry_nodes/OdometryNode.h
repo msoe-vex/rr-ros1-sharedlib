@@ -20,10 +20,10 @@ public:
     };
 
     OdometryNode(NodeManager* node_manager, std::string handle_name, ADIEncoderNode* odom_encoder_1, 
-        ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor, OdomConfig odom_config);
+        ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor, OdomConfig odom_config, IOdometry::EncoderLocations locations);
 
     OdometryNode(NodeManager* node_manager, std::string handle_name, MotorNode* motor_1, MotorNode* motor_2, 
-        InertialSensorNode* inertial_sensor, OdomConfig odom_config);
+        InertialSensorNode* inertial_sensor, OdomConfig odom_config, IOdometry::EncoderLocations locations);
 
     void initialize();
 
@@ -41,6 +41,8 @@ private:
     std::string m_handle_name;
 
     OdomConfig m_odom_config;
+
+    IOdometry::EncoderLocations m_locations;
 
     ADIEncoderNode* m_odom_encoder_1;
     ADIEncoderNode* m_odom_encoder_2;
