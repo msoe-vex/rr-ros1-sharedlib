@@ -9,7 +9,13 @@ bool selectAuton(ControllerNode* controllerNode, AutonManagerNode* autonManagerN
         [&autonNames](Auton* auton) { autonNames.push_back(auton->GetName()); });
 
     Auton* newAuton = autons.at(controllerNode->selectorMenu(autonNames));
-    autonManagerNode->selected_auton = newAuton;
     
+    string autonPath = newAuton->GetAssociatedPath();
+    if (autonPath != "") {
+        autonManagerNode->setPathsFile(autonPath + ".json");
+    }
+    
+    autonManagerNode->selected_auton = newAuton;
+
     return newAuton->GetNeedsPath();
 }
