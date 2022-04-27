@@ -14,7 +14,7 @@ public:
 
     virtual void setLiftVoltage(int voltage) = 0;
 
-    virtual void setLiftVelocity(int velocity) = 0;
+    virtual void setLiftVelocity(float velocity) = 0;
 
     virtual void setLiftPosition(int position, int tolerance) = 0;
 
