@@ -8,7 +8,8 @@ bool selectAuton(ControllerNode* controllerNode, AutonManagerNode* autonManagerN
     std::for_each(autons.begin(), autons.end(), 
         [&autonNames](Auton* auton) { autonNames.push_back(auton->GetName()); });
 
-    autonManagerNode->selected_auton = autons.at(controllerNode->selectorMenu(autonNames));
+    Auton* newAuton = autons.at(controllerNode->selectorMenu(autonNames));
+    autonManagerNode->selected_auton = newAuton;
     
-    return true;
+    return newAuton->GetNeedsPath();
 }
