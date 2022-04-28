@@ -13,6 +13,18 @@ ADIGyroNode::ADIGyroNode(NodeManager* node_manager, int port, double multiplier,
         (m_sub_publish_data_name.c_str(), &ADIGyroNode::m_publishData, this);
 }
 
+ADIGyroNode::ADIGyroNode(NodeManager* node_manager, pros::ext_adi_port_pair_t port_pair, 
+    double multiplier, std::string handle_name) : 
+    Node(node_manager, 10), m_gyro(port_pair, multiplier) {
+    m_handle_name = handle_name.insert(0, "sensor/");
+    m_sub_publish_data_name = m_handle_name + "/publish";
+
+    m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_gyro_msg);
+
+    m_publish_data_sub = new ros::Subscriber<std_msgs::Empty, ADIGyroNode>
+        (m_sub_publish_data_name.c_str(), &ADIGyroNode::m_publishData, this);
+}
+
 void ADIGyroNode::m_publishData(const std_msgs::Empty& msg) {
     m_populateMessage();
     m_publisher->publish(&m_gyro_msg);

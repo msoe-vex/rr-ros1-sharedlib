@@ -20,8 +20,9 @@ private:
     void m_publishData(const std_msgs::Empty& msg);
 
 public:
-    ADIDigitalInNode(NodeManager* node_manager, int port,
-        std::string handle_name);
+    ADIDigitalInNode(NodeManager* node_manager, int port, std::string handle_name);
+
+    ADIDigitalInNode(NodeManager* node_manager, pros::ext_adi_port_pair_t port_pair, std::string handle_name);
 
     void initialize();
 

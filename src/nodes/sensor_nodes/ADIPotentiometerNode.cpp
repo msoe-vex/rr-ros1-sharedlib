@@ -14,6 +14,18 @@ ADIPotentiometerNode::ADIPotentiometerNode(NodeManager* node_manager, int port,
         (m_subPublishDataName.c_str(), &ADIPotentiometerNode::m_publishData, this);
 }
 
+ADIPotentiometerNode::ADIPotentiometerNode(NodeManager* node_manager, pros::ext_adi_port_pair_t port_pair,
+    std::string handle_name, pros::adi_potentiometer_type_e potType) : Node(node_manager, 10), 
+    m_potentiometer(port_pair, potType) {
+    m_handleName = handle_name.insert(0, "sensor/");
+    m_subPublishDataName = m_handleName + "/publish";
+
+    m_publisher = new ros::Publisher(m_handleName.c_str(), &m_potentiometerMsg);
+
+    m_publishDataSub = new ros::Subscriber<std_msgs::Empty, ADIPotentiometerNode>
+        (m_subPublishDataName.c_str(), &ADIPotentiometerNode::m_publishData, this);
+}
+
 void ADIPotentiometerNode::m_publishData(const std_msgs::Empty& msg) {
     m_populateMessage();
     m_publisher->publish(&m_potentiometerMsg);
