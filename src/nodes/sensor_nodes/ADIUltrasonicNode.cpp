@@ -14,6 +14,18 @@ ADIUltrasonicNode::ADIUltrasonicNode(NodeManager* node_manager, int port_ping,
         (m_sub_publish_data_name.c_str(), &ADIUltrasonicNode::m_publishData, this);
 }
 
+ADIUltrasonicNode::ADIUltrasonicNode(NodeManager* node_manager, pros::ext_adi_port_tuple_t port_tuple,
+     std::string handle_name) : Node(node_manager, 10),
+    m_ultrasonic(port_tuple) {
+    m_handle_name = handle_name.insert(0, "sensor/");
+    m_sub_publish_data_name = m_handle_name + "/publish";
+
+    m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_ultrasonic_msg);
+
+    m_publish_data_sub = new ros::Subscriber<std_msgs::Empty, ADIUltrasonicNode>
+        (m_sub_publish_data_name.c_str(), &ADIUltrasonicNode::m_publishData, this);
+}
+
 void ADIUltrasonicNode::m_publishData(const std_msgs::Empty& msg) {
     m_populateMessage();
     m_publisher->publish(&m_ultrasonic_msg);
