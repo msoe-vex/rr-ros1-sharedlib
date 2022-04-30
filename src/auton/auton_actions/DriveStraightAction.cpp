@@ -28,26 +28,34 @@ AutonAction::actionStatus DriveStraightAction::Action() {
 
     double speed = m_max_velocity;
 
+    double test = 0.0;
+    std::cout<<"Test: "<<test<<std::endl;
+    std::cout<<"Last speed: "<<m_lastSpeed<<std::endl;
     double accel = (m_max_velocity - m_lastSpeed) / dt;
 
     if (accel < -m_max_accel) {
+        std::cout<<"Small accel "<<std::endl;
+        std::cout<<"Accel: "<<accel<<" "<<std::endl;
         speed = m_lastSpeed - m_max_accel * dt;
     } else if (accel > m_max_accel) {
+        std::cout<<"Big accel "<<std::endl;
         speed = m_lastSpeed + m_max_accel * dt;
     }
 
     // Subtract the found offset of 3 inches to shorten the path
     double remainingDistance = max(fabs(m_distance) - fabs(((m_drive_node->getIntegratedEncoderVals().left_front_encoder_val / 900.0) * (5./3.) * (M_PI * 3.25))), 0.);
+    std::cout << "Remaining Distance: " << remainingDistance << std::endl;
     //std::cout << "Encoder Value: " << m_drive_node->getIntegratedEncoderVals().left_front_encoder_val << std::endl;
     //std::cout << "Current Angle: " << m_current_pose.angle.angle() << " Starting Angle: " << m_starting_pose.angle.angle() <<  " Remaining Dist: " << remainingDistance <<std::endl;
 
 
-    double maxAllowedSpeed = sqrt(2 * m_max_accel * remainingDistance);
+    double maxAllowedSpeed = sqrt(2. * m_max_accel * remainingDistance);
     if (fabs(speed) > maxAllowedSpeed) {
         speed = std::copysign(maxAllowedSpeed, speed);
     }
 
     speed = max(speed, m_feedForward);
+    std::cout << "speed: " << speed << std::endl;
 
     //calculating motor offset
     double offset = m_theta_error_PID.calculate(theta_error) * speed;
@@ -65,7 +73,6 @@ AutonAction::actionStatus DriveStraightAction::Action() {
         return END;
     } else {
         if (m_distance > 0) {
-            // std::cout << "speed: " << speed << std::endl;
             // m_drive_node->setDriveVelocity(speed, offset);
             m_drive_node->setDriveVelocity(speed, -offset);
         } else {
