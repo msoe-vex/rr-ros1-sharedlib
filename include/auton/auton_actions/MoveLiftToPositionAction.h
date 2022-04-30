@@ -11,7 +11,7 @@ private:
     int m_tolerance;
 
 public:
-    MoveLiftToPositionAction(ILiftNode* lift_node, int position, int tolerance = 5);
+    MoveLiftToPositionAction(ILiftNode* lift_node, int position, int tolerance = 20);
 
     void ActionInit();
 
