@@ -34,6 +34,8 @@ bool PathManager::LoadPaths(json loadedJson) {
         for (auto pathJson : loadedJson["paths"]) {
             string name = pathJson["name"];
             vector<PathPoint> pathPoints;
+
+            Logger::logInfo("Path name: " + name, true);
             for (auto point : pathJson["points"]) {
                 Vector2d linear_velocity(point["vx"], point["vy"]);
                 float time = point["time"];
@@ -47,7 +49,7 @@ bool PathManager::LoadPaths(json loadedJson) {
             m_paths[name] = newPath;
         }
     } catch (const exception& e) {
-        Logger::logInfo("Error reading json path! " + string(e.what()));
+        Logger::logInfo("Error reading json path! " + string(e.what()), true);
         return false;
     }
 
@@ -59,11 +61,11 @@ bool PathManager::LoadPathsFile(string filePath) {
     try {
         pathsFile.open(filePath);
         if(!pathsFile.is_open()) {
-            Logger::logInfo("Could not open paths file at " + filePath);
+            Logger::logInfo("Could not open paths file at " + filePath, true);
             return false;
         }
     } catch (const exception& e) {
-        Logger::logInfo("Could not open paths file at " + filePath + " : " + string(e.what()));
+        Logger::logInfo("Could not open paths file at " + filePath + " : " + string(e.what()), true);
         return false;
     }
 
@@ -71,7 +73,7 @@ bool PathManager::LoadPathsFile(string filePath) {
     try {
         pathsFile >> loadedJson;
     } catch (const exception& e) {
-        Logger::logInfo("Could not parse paths file:" + string(e.what()));
+        Logger::logInfo("Could not parse paths file:" + string(e.what()), true);
         pathsFile.close();
         return false;
     }
@@ -86,7 +88,7 @@ unordered_map<string, Path> PathManager::GetPaths() {
 
 Path PathManager::GetPath(string name) {
     if (m_paths.find(name) == m_paths.end()) {
-        Logger::logInfo("Path with key: " + name + " not found!");
+        Logger::logInfo("Path with key: " + name + " not found!", true);
         return m_paths[m_paths.begin()->first];
     } else {
         return m_paths[name];
