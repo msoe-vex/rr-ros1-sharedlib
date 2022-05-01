@@ -20,7 +20,7 @@ public:
         WARNING,
         ERROR
     };
-    static void logInfo(string message);
+    static void logInfo(string message, bool sysLog=false);
     static void setConsoleLoggingLevel(LoggingLevel level);
     static void giveNodeManager(NodeManager * node_manager);
 private:
