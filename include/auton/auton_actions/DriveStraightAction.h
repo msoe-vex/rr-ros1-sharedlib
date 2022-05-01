@@ -12,14 +12,16 @@ private:
     OdometryNode* m_odometry_node;
     Timer m_timer;
     Pose m_starting_pose;
-    Pose m_current_pose;
     PID m_theta_error_PID;
     double m_distance;
+    double m_accelerationDistanceIn;
     double m_max_velocity;
     double m_max_accel;
     double m_lastSpeed;
     double m_lastTime;
     double m_feedForward;
+
+    double m_getUnboundedInstantaneousVelocity(double dt, double lastVelocity);
 
 public:
     DriveStraightAction(IDriveNode* drive_node, OdometryNode* odometry_node, double distance, double max_velocity, 
