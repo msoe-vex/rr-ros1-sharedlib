@@ -1,8 +1,9 @@
 #include "lib-rr/auton/auton_actions/DriveStraightAction.h"
 
-DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, OdometryNode* odometry_node, double distance, double max_velocity, double max_accel) :
+DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, OdometryNode* odometry_node, DriveStraightParams params, double distance, double max_velocity, double max_accel) :
         m_drive_node(drive_node), 
         m_odometry_node(odometry_node),
+        m_params(params),
         m_theta_error_PID(0.35, 0, 0),
         m_distance(distance), // in inches
         m_max_velocity(max_velocity), 
@@ -43,13 +44,8 @@ AutonAction::actionStatus DriveStraightAction::Action() {
     // Determine the distance we have already driven in encoder ticks
     double currentDistanceTicks = (m_drive_node->getIntegratedEncoderVals().left_front_encoder_val + m_drive_node->getIntegratedEncoderVals().right_front_encoder_val) / 2.;
 
-    // Set constants for distance unit conversion
-    double encoderTicksPerRev = 900.;
-    double gearRatio = 5. / 3.;
-    double wheelCircumference = M_PI * 3.25;
-
     // Determine the distance we have already driven in inches
-    double currentDistanceIn = (currentDistanceTicks / encoderTicksPerRev) * gearRatio * wheelCircumference;
+    double currentDistanceIn = (currentDistanceTicks / m_params.encoderTicksPerRev) * m_params.gearRatio * m_params.wheelCircumference;
 
     // Determine the remaining distance to drive
     double remainingDistanceIn = max(fabs(m_distance) - fabs(currentDistanceIn), 0.);
@@ -58,9 +54,10 @@ AutonAction::actionStatus DriveStraightAction::Action() {
     double speed = min(m_getUnboundedInstantaneousVelocity(dt, m_lastSpeed), m_max_velocity);
 
     // Limit speed if within the deceleration curve
-    if (remainingDistanceIn < m_accelerationDistanceIn) {
+    // Allow the robot twice as long to stop, to account for momentum
+    if (remainingDistanceIn < m_accelerationDistanceIn * 2) {
         // Determine the maximum deceleration speed based on the remaining distance to the target
-        double maxDecelerationSpeed = sqrt(2 * remainingDistanceIn * m_max_accel);
+        double maxDecelerationSpeed = sqrt(remainingDistanceIn * m_max_accel);
 
         // Set the speed to the minimum of the current speed, and the max curve
         speed = min(speed, maxDecelerationSpeed);
@@ -81,7 +78,7 @@ AutonAction::actionStatus DriveStraightAction::Action() {
     m_lastTime = m_timer.Get();
 
     // Return the velocity to the robot
-    if (remainingDistanceIn < 0.5) {
+    if (remainingDistanceIn <= 0) {
         return END;
     } else {
         if (m_distance > 0) {
