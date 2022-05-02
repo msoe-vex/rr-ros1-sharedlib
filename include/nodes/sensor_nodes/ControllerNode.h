@@ -36,6 +36,9 @@ public:
     void teleopPeriodic();
 
     void autonPeriodic();
+    
+    int selectorMenu(std::vector<std::string> options);
+    void updateDisplay(std::string text);
 
     ~ControllerNode();
 };

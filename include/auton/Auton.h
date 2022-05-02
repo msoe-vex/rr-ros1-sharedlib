@@ -51,7 +51,7 @@ private:
 
 class Auton {
 public:
-    Auton(string name, bool defaultAuton = false);
+    Auton(string name, string path = "", bool needsPath = true, bool defaultAuton = false);
 
     inline Auton* GetInstance() {
         return this;
@@ -62,6 +62,8 @@ public:
     }
 
     string GetName();
+    bool GetNeedsPath();
+    string GetAssociatedPath();
     void AutonPeriodic();
     void AutonInit();
     bool Complete();
@@ -72,6 +74,8 @@ protected:
     virtual void AddNodes() = 0;
 private:
     string m_name;
+    bool m_needsPath;
+    string m_path;
     bool m_defaultAuton = false;
     vector<AutonNode*> m_firstNode;
 };
