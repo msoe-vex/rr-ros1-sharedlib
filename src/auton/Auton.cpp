@@ -155,12 +155,12 @@ AutonNode::~AutonNode() {
 }
 
 /*
- * Initialize an autonomous routine with given name, if it needs a path, first node, and whether this autonomous should be the default
+ * Initialize an autonomous routine with given name, given path, if it needs a path, first node, and whether this autonomous should be the default
  * selected autonomous on Smart Dashboard
  */
 Auton::Auton(string name, string path, bool needsPath, bool defaultAuton) {
     m_name = name;
-    m_needsPath = needsPath || path != "";
+    m_needsPath = needsPath || path == "";
     m_path = path;
     m_defaultAuton = defaultAuton;
 }
