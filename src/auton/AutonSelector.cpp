@@ -1,8 +1,9 @@
-#include "lib-rr/auton/AutonSelector.h"
+#include "lib-rr/auton/AutonManagerNode.h"
+#include "lib-rr/nodes/sensor_nodes/ControllerNode.h"
 
 bool selectAuton(ControllerNode* controllerNode, AutonManagerNode* autonManagerNode) {
 
-    std::vector<Auton*> autons = autonManagerNode->autons;
+    std::vector<Auton*> autons = autonManagerNode->m_autons;
 
     std::vector<std::string> autonNames;
     std::for_each(autons.begin(), autons.end(), 
