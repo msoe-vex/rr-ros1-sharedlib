@@ -11,13 +11,15 @@ HoldPositionAction::HoldPositionAction(IDriveNode* drive_node, OdometryNode* odo
 
 void HoldPositionAction::ActionInit() {
     m_timer.Start();
-    m_startingPose = m_odometryNode->getCurrentPose();
+
+    m_startingPose = (m_driveNode->getIntegratedEncoderVals().left_front_encoder_val + m_driveNode->getIntegratedEncoderVals().right_front_encoder_val) / 2.;
 }
 
 AutonAction::actionStatus HoldPositionAction::Action() {
-    m_currentPose = m_odometryNode->getCurrentPose();
-    float x_error = m_currentPose.position.x() - m_startingPose.position.x();
-    m_motorOutput = MAX_MOTOR_VOLTAGE * m_holdingPID.calculate(x_error);
+    double currentPose = (m_driveNode->getIntegratedEncoderVals().left_front_encoder_val + m_driveNode->getIntegratedEncoderVals().right_front_encoder_val) / 2.;
+
+    float error = currentPose - m_startingPose;
+    m_motorOutput = MAX_MOTOR_VOLTAGE * m_holdingPID.calculate(error);
     m_driveNode->setDriveVoltage(0, m_motorOutput, 0);
 
     if (m_timer.Get() < m_timoutTime){
@@ -25,7 +27,6 @@ AutonAction::actionStatus HoldPositionAction::Action() {
     } else {
         return END;
     }
-    
 }
 
 void HoldPositionAction::ActionEnd() {

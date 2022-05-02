@@ -19,8 +19,7 @@ private:
     OdometryNode* m_odometryNode;
     float m_timoutTime;
     Timer m_timer;
-    Pose m_startingPose;
-    Pose m_currentPose;
+    double m_startingPose;
     PID m_holdingPID;
     float m_motorOutput;
 };
