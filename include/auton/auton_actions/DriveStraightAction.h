@@ -15,7 +15,7 @@ public:
     };
 
     DriveStraightAction(IDriveNode* drive_node, OdometryNode* odometry_node, DriveStraightParams params, double distance, double max_velocity, 
-        double max_accel);
+        double max_accel, double slowDownCoef=2);
 
     void ActionInit();
     actionStatus Action();
@@ -36,6 +36,7 @@ private:
     double m_lastTime;
     double m_feedForward;
     double m_stopTime = -1.;
+    double m_slowDownCoef;
 
     double m_getUnboundedInstantaneousVelocity(double dt, double lastVelocity);
 };
