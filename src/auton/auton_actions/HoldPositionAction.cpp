@@ -18,9 +18,9 @@ AutonAction::actionStatus HoldPositionAction::Action() {
     m_currentPose = m_odometryNode->getCurrentPose();
     float x_error = m_currentPose.position.x() - m_startingPose.position.x();
     m_motorOutput = MAX_MOTOR_VOLTAGE * m_holdingPID.calculate(x_error);
-    m_driveNode->setDriveVoltage(m_motorOutput, 0, 0);
+    m_driveNode->setDriveVoltage(0, m_motorOutput, 0);
 
-    if(m_timer.Get() > m_timoutTime){
+    if (m_timer.Get() < m_timoutTime){
         return CONTINUE;
     } else {
         return END;
