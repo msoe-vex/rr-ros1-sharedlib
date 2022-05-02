@@ -111,6 +111,7 @@ int ControllerNode::selectorMenu(std::vector<std::string> options) {
             pros::delay(50);
         }
     }
+    return -1;
 }
 
 // Refreshes the display and updates it with the given text
