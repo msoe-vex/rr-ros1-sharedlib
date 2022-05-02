@@ -76,6 +76,51 @@ void ControllerNode::m_populateMessage() {
     m_controller_msg.is_connected = (bool)m_controller.is_connected();
 }
 
+// Creates selection menu on controller, returning selected options' position in vector as an int
+int ControllerNode::selectorMenu(std::vector<std::string> options) {
+    // initial state
+    int pos = 0;
+    std::string option = options.at(pos);
+    updateDisplay(option);
+
+    // update loop
+    while(!pros::competition::is_connected()) {
+        int button_down = m_controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN);
+        int button_up = m_controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP);
+        if (button_down || button_up) {
+            pos += button_down - button_up;
+
+            // bounds checks
+            if (pos == options.size()) {
+                pos = 0;
+            } else if (pos == -1) {
+                pos = options.size() - 1;
+            }
+            
+            // update displayed filename
+            option = options.at(pos);
+            updateDisplay(option);
+
+        } else if (m_controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
+            // return selection
+            option = options.at(pos);
+            updateDisplay("->" + option);
+            return pos;
+
+        } else {
+            pros::delay(50);
+        }
+    }
+    return -1;
+}
+
+// Refreshes the display and updates it with the given text
+void ControllerNode::updateDisplay(std::string text) {
+    m_controller.clear_line(0);
+    pros::delay(50);
+    m_controller.set_text(0, 0, text);
+}
+
 ControllerNode::~ControllerNode() {
     delete m_publisher;
     delete m_rumble_controller_sub;
