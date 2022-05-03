@@ -1,13 +1,14 @@
 #include "lib-rr/auton/auton_actions/DriveStraightAction.h"
 
-DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, OdometryNode* odometry_node, DriveStraightParams params, double distance, double max_velocity, double max_accel) :
+DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, OdometryNode* odometry_node, DriveStraightParams params, double distance, double max_velocity, double max_accel, double slowDownCoef) :
         m_drive_node(drive_node), 
         m_odometry_node(odometry_node),
         m_params(params),
         m_theta_error_PID(0.35, 0, 0),
         m_distance(distance), // in inches
         m_max_velocity(max_velocity), 
-        m_max_accel(max_accel) {
+        m_max_accel(max_accel),
+        m_slowDownCoef(slowDownCoef) {
 
 }
 
@@ -55,7 +56,7 @@ AutonAction::actionStatus DriveStraightAction::Action() {
 
     // Limit speed if within the deceleration curve
     // Allow the robot twice as long to stop, to account for momentum
-    if (remainingDistanceIn < m_accelerationDistanceIn * 2) {
+    if (remainingDistanceIn < m_accelerationDistanceIn * m_slowDownCoef) {
         // Determine the maximum deceleration speed based on the remaining distance to the target
         double maxDecelerationSpeed = sqrt(remainingDistanceIn * m_max_accel);
 
