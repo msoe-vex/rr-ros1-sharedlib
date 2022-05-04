@@ -14,7 +14,7 @@ public:
 
     virtual void useClaw(bool opened) = 0;
     
-    virtual void setDisabled(bool disabled) = 0;
+    //virtual void setDisabled(bool disabled) = 0;
 
     virtual void teleopPeriodic() = 0;
 
