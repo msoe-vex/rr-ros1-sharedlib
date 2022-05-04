@@ -79,7 +79,7 @@ void ControllerNode::m_populateMessage() {
 // Creates selection menu on controller, returning selected options' position in vector as an int
 int ControllerNode::selectorMenu(std::vector<std::string> options) {
     // initial state
-    int pos = 0;
+    size_t pos = 0;
     std::string option = options.at(pos);
     updateDisplay(option);
 
