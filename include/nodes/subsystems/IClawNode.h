@@ -13,10 +13,14 @@ public:
     virtual void initialize() = 0;
 
     virtual void useClaw(bool opened) = 0;
+    
+    virtual void setDisabled(bool disabled) = 0;
 
     virtual void teleopPeriodic() = 0;
 
     virtual void autonPeriodic() = 0;
+
+    bool claw_open;
 
     virtual ~IClawNode() {};
 };
