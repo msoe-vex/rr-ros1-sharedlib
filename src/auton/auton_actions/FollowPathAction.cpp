@@ -1,11 +1,12 @@
 #include "lib-rr/auton/auton_actions/FollowPathAction.h"
 
-FollowPathAction::FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, IPathPursuit* pursuit, Path path, bool reset_pose) :
+FollowPathAction::FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, IPathPursuit* pursuit, Path path, bool reset_pose, double end_dist_threshold) :
         m_drive_node(drive_node),
         m_odom_node(odom_node), 
         m_pursuit(pursuit),
         m_path(path),
-        m_reset_pose(reset_pose) {
+        m_reset_pose(reset_pose),
+        m_end_dist_threshold(end_dist_threshold) {
 
 }
 
@@ -31,6 +32,15 @@ AutonAction::actionStatus FollowPathAction::Action() {
     } else if (m_timer.Get() > 0 && !target_velocity.is_within_end_tolerance) {
         m_timer.Reset();
     } else if (m_timer.Get() > 0.3) {
+        Pose finalPose = m_path.getPathPoints().back().getPose();
+
+        double distToFinalPoint = sqrt(pow(currentPose.position.x() - finalPose.position.x(), 2) + pow(currentPose.position.y() - finalPose.position.y(), 2));
+
+        if (distToFinalPoint > m_end_dist_threshold) {
+            m_drive_node->setDriveVelocity(0, 0, 0);
+            return CONTINUE;
+        }
+
         return END;
     }
 

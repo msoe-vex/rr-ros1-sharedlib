@@ -14,10 +14,11 @@ private:
     IPathPursuit* m_pursuit;
     Path m_path;
     bool m_reset_pose;
+    double m_end_dist_threshold;
     Timer m_timer;
 
 public:
-    FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, IPathPursuit* pursuit, Path path, bool reset_pose=false);
+    FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, IPathPursuit* pursuit, Path path, bool reset_pose=false, double m_end_dist_threshold=16.);
 
     void ActionInit();
 
